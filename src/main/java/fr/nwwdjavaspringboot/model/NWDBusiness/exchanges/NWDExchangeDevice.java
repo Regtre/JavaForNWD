@@ -1,5 +1,7 @@
 package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum NWDExchangeDevice {
     Unknown(0),
     Ios(11),
@@ -16,6 +18,7 @@ public enum NWDExchangeDevice {
         this.value = value;
     }
 
+    @JsonValue
     public int getValue() {
         return value;
     }

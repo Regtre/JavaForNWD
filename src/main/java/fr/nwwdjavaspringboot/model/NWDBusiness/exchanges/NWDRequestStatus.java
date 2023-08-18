@@ -1,5 +1,7 @@
 package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum NWDRequestStatus {
     /// <summary>
     /// Answer returned if Server is Disabled
@@ -58,5 +60,8 @@ public enum NWDRequestStatus {
     NWDRequestStatus(int i) {
         this.i = i;
     }
-
+    @JsonValue
+    public int getI() {
+        return i;
+    }
 }

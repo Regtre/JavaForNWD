@@ -13,5 +13,6 @@ class TestRequestServiceTest {
     public void testSendPost() throws IOException, InterruptedException {
         TestRequest testRequest = new TestRequest();
         testRequest.post();
+//        testRequest.postOkHttp();
     }
 }

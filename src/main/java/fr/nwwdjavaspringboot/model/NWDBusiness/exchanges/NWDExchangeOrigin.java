@@ -1,5 +1,8 @@
 package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.io.Serializable;
 
 public enum NWDExchangeOrigin implements Serializable {
@@ -15,6 +18,7 @@ public enum NWDExchangeOrigin implements Serializable {
         this.value = value;
     }
 
+    @JsonValue
     public int getValue() {
         return value;
     }

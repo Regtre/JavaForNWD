@@ -20,6 +20,7 @@ public class NWDRequestRuntime extends NWDBasicRequest {
         Timestamp = NWDTimestamp.getTimestampUnix();
     }
 
+
     public NWDRequestRuntime(INWDProjectKey sProjectKeyManager, NWDRequestPlayerToken sPlayerToken, NWDExchangeRuntimeKind sKind,
                              NWDUpPayload sUpPayload, NWDExchangeOrigin sOrigin, NWDExchangeDevice sDevice)
     {
