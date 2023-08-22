@@ -8,11 +8,13 @@ import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.exchange.NWDExchangeRun
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request.NWDRequestPlayerToken;
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request.NWDRequestRuntime;
 import fr.nwwdjavaspringboot.model.NWDBusiness.facade.INWDProjectKey;
+import fr.nwwdjavaspringboot.util.ArgumentNullException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 @SpringBootTest
 class NWDRuntimeTest {
@@ -22,14 +24,22 @@ class NWDRuntimeTest {
     private NWDRequestPlayerToken playerToken;
     private NWDExchangeOrigin exchangeOrigin;
     private NWDExchangeDevice exchangeDevice;
+    private NWDAccountSign accountMail;
+    private NWDAccountSign account;
+
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws ArgumentNullException, UnsupportedEncodingException {
         nwdRuntime = new NWDRuntime();
 
         NWDProjectInformation projectInformation = new NWDProjectInformation();
         projectKey = projectInformation;
         playerToken = new NWDRequestPlayerToken(projectInformation);
+//        accountMail = NWDAccountSign.CreateEmailPassword("r.poissonnier@hotmail.fr", "REMY_le_KING", playerToken.getProjectId());
+        account = NWDAccountSign.CreateLoginPassword("LeKing", "REMY_le_KING", playerToken.getProjectId());
+
+
+
         exchangeDevice = NWDExchangeDevice.Web;
         exchangeOrigin = NWDExchangeOrigin.Web;
 
@@ -52,12 +62,10 @@ class NWDRuntimeTest {
     }
 
     @Test
-    public void signUpTest() throws IOException {
-        NWDAccountSign accountSign =  new NWDAccountSign();
-        accountSign.Name = "Remy";
+    public void signUpTest() throws IOException, ArgumentNullException {
         NWDRequestRuntime signUpRequest = NWDRequestRuntime.CreateRequestSignUp(projectKey, playerToken,
-                accountSign,exchangeOrigin, exchangeDevice);
-        System.out.println( nwdRuntime.postRequestRuntime(signUpRequest).toString());
+                account, exchangeOrigin, exchangeDevice);
+        System.out.println(nwdRuntime.postRequestRuntime(signUpRequest).toString());
     }
 
 }

@@ -11,7 +11,7 @@ public class NWDProjectInformation implements INWDProjectInformation, INWDProjec
 
     @Override
     public long GetProjectId() {
-        return 1555938436;
+        return 51376;
     }
 
     @Override

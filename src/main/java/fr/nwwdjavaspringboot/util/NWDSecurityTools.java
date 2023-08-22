@@ -44,26 +44,30 @@ public class NWDSecurityTools {
     }
 
     public static String CryptAes(String sText, String sKey, String sVector, NWDSecurityAesTypeEnum sAes) throws UnsupportedEncodingException, ArgumentNullException {
+
         String rParamB64 = "";
-        if (!Strings.isNullOrEmpty(sText)) {
+
+        if (sText != null && !sText.isEmpty()) {
             // Set AES bits size
+
             int tAesSize = 128;
             String tKey = KeyLengthFix(sKey, 24);
             String tVector = KeyLengthFix(sVector, 16);
             // Encrypt the String to an array of bytes.
             byte[] tEncrypted = new byte[0];
-            /* Run CryptAes*/
+
             try {
-                tEncrypted = InternalCryptAes(sText, Encoding.getBytes(tKey), Encoding.getBytes(tVector), tAesSize);
+                tEncrypted = InternalCryptAes(sText, tKey.getBytes(), tVector.getBytes(), tAesSize);
             } catch (IllegalBlockSizeException | BadPaddingException | InvalidKeyException | NoSuchPaddingException |
                      NoSuchAlgorithmException | InvalidAlgorithmParameterException | IOException e) {
                 throw new RuntimeException(e);
             }
-            // Encode parameters
-            rParamB64 = new String(Base64.getEncoder().encode(tEncrypted));
-        }
 
+            rParamB64 = Base64.getEncoder().encodeToString(tEncrypted);
+        }
+        // Encode parameters
         return rParamB64;
+
     }
 
     public static String CryptAes(String sText, String sKey, String sVector) throws UnsupportedEncodingException, ArgumentNullException {
@@ -110,7 +114,7 @@ public class NWDSecurityTools {
         // Set the key and IV
         SecretKeySpec keySpec = new SecretKeySpec(sKey, "AES");
         IvParameterSpec ivSpec = new IvParameterSpec(sIv);
-        tAes.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec);
+        tAes.init(Cipher.ENCRYPT_MODE, keySpec);
 
         // Create a ByteArrayOutputStream to store the encrypted data
         ByteArrayOutputStream tBaosEncrypt = new ByteArrayOutputStream();
