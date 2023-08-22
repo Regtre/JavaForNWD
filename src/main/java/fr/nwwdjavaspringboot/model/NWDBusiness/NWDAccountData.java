@@ -1,6 +1,8 @@
 package fr.nwwdjavaspringboot.model.NWDBusiness;
 
-public class NWDAccountData {
+import fr.nwwdjavaspringboot.model.NWDBusiness.facade.INWDAccountDependence;
+
+public class NWDAccountData extends NWDBasicModel implements INWDAccountDependence {
 
     public long Account;
     public short Range;

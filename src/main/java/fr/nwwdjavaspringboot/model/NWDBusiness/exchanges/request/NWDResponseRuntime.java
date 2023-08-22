@@ -1,6 +1,9 @@
-package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges;
+package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request;
 import com.google.gson.Gson;
-import fr.nwwdjavaspringboot.model.NWDBusiness.INWDProjectKey;
+import fr.nwwdjavaspringboot.model.NWDBusiness.facade.INWDProjectKey;
+import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.NWDDownPayload;
+import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.basic.NWDBasicResponse;
+import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.exchange.NWDExchangeRuntimeKind;
 import fr.nwwdjavaspringboot.util.NWDRandom;
 import fr.nwwdjavaspringboot.util.NWDSecurityTools;
 import fr.nwwdjavaspringboot.util.NWDTimestamp;

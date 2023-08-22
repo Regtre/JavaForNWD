@@ -1,7 +1,15 @@
-package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges;
+package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request;
 
 import com.google.gson.Gson;
-import fr.nwwdjavaspringboot.model.NWDBusiness.INWDProjectKey;
+import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.NWDUpPayloadAccountSignUp;
+import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.account.NWDAccountSign;
+import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.exchange.NWDUpPayloadAccountSignIn;
+import fr.nwwdjavaspringboot.model.NWDBusiness.facade.INWDProjectKey;
+import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.NWDUpPayload;
+import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.basic.NWDBasicRequest;
+import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.exchange.NWDExchangeDevice;
+import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.exchange.NWDExchangeOrigin;
+import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.exchange.NWDExchangeRuntimeKind;
 import fr.nwwdjavaspringboot.util.NWDRandom;
 import fr.nwwdjavaspringboot.util.NWDSecurityTools;
 import fr.nwwdjavaspringboot.util.NWDTimestamp;
@@ -11,19 +19,17 @@ import java.lang.reflect.Type;
 public class NWDRequestRuntime extends NWDBasicRequest {
 
 
-    private NWDExchangeRuntimeKind Kind;
+    public NWDExchangeRuntimeKind Kind;
 
-    private NWDRequestPlayerToken PlayerToken;
+    public NWDRequestPlayerToken PlayerToken;
 
-    public NWDRequestRuntime()
-    {
+    public NWDRequestRuntime() {
         Timestamp = NWDTimestamp.getTimestampUnix();
     }
 
 
     public NWDRequestRuntime(INWDProjectKey sProjectKeyManager, NWDRequestPlayerToken sPlayerToken, NWDExchangeRuntimeKind sKind,
-                             NWDUpPayload sUpPayload, NWDExchangeOrigin sOrigin, NWDExchangeDevice sDevice)
-    {
+                             NWDUpPayload sUpPayload, NWDExchangeOrigin sOrigin, NWDExchangeDevice sDevice) {
         Timestamp = NWDTimestamp.getTimestampUnix();
         ProjectId = sPlayerToken.getProjectId();
         Environment = sPlayerToken.getEnvironmentKind();
@@ -31,17 +37,14 @@ public class NWDRequestRuntime extends NWDBasicRequest {
         Kind = sKind;
         Origin = sOrigin;
         Device = sDevice;
-        if (sUpPayload != null)
-        {
+        if (sUpPayload != null) {
             setPayload(sUpPayload);
         }
 
-        if (Payload == null || Payload.isEmpty())
-        {
+        if (Payload == null || Payload.isEmpty()) {
             Payload = "";
         }
-        if (ProjectId != 0)
-        {
+        if (ProjectId != 0) {
             Secure(sProjectKeyManager, NWDRandom.RandomStringCypher(32));
         }
     }
@@ -61,24 +64,20 @@ public class NWDRequestRuntime extends NWDBasicRequest {
         return rReturn;
     }
 
-    protected String GenerateHash(INWDProjectKey sProjectKeyManager)
-    {
+    protected String GenerateHash(INWDProjectKey sProjectKeyManager) {
         String rReturn;
         String tPayLoadPrint;
-        if (PlayerToken == null)
-        {
+        if (PlayerToken == null) {
             PlayerToken = new NWDRequestPlayerToken(ProjectId, Environment);
         }
 
-        if (Payload == null)
-        {
+        if (Payload == null) {
             Payload = "";
         }
 
         // string tSaltKey = sProjectKeyManager.GetProjectKey(PlayerToken.ProjectId, PlayerToken.EnvironmentKind);
         String tSaltKey = sProjectKeyManager.getProjectKey(ProjectId, Environment);
-        if (tSaltKey != null && !tSaltKey.isEmpty())
-        {
+        if (tSaltKey != null && !tSaltKey.isEmpty()) {
             tPayLoadPrint = NWDSecurityTools.GenerateSha(Payload);
             rReturn = NWDSecurityTools.GenerateSha(
                     tPayLoadPrint
@@ -91,9 +90,7 @@ public class NWDRequestRuntime extends NWDBasicRequest {
                             + Origin
                     // + PlayerToken.DataTrack.ToString())
             );
-        }
-        else
-        {
+        } else {
             return "";
             //throw new Exception(sProjectKeyManager.GetProjectKeyInstanceName()+" : "+ nameof(INWDProjectKey) + "." + nameof(INWDProjectKey.GetProjectKey) + " return string empty or null!");
         }
@@ -102,41 +99,48 @@ public class NWDRequestRuntime extends NWDBasicRequest {
         return rReturn;
     }
 
-    public void Secure(INWDProjectKey sProjectKeyManager, String sStamp)
-    {
+    public void Secure(INWDProjectKey sProjectKeyManager, String sStamp) {
         Stamp = sStamp;
         Hash = GenerateHash(sProjectKeyManager);
     }
-    public boolean IsValid(INWDProjectKey sProjectKeyManager)
-    {
+
+    public boolean IsValid(INWDProjectKey sProjectKeyManager) {
         boolean rReturn = false;
         String tHashActual = GenerateHash(sProjectKeyManager);
-        if (Hash != null && !Hash.isEmpty() )
-        {
-            if (tHashActual == Hash)
-            {
-                if (PlayerToken.getProjectId() == ProjectId)
-                {
+        if (Hash != null && !Hash.isEmpty()) {
+            if (tHashActual == Hash) {
+                if (PlayerToken.getProjectId() == ProjectId) {
                     rReturn = true;
                 }
             }
         }
-        if (rReturn == false)
-        {
+        if (rReturn == false) {
             //NWDLogger.Warning("["+IdName+ "] " +nameof (NWDRequestRuntime) +"." +nameof (IsValid) +" Error  : hash is not valid for "+ProjectId+" "+Environment.ToString()+" (player token "+ProjectId+" "+Environment.ToString()+") with salt result  '" +sProjectKeyManager.GetProjectKey(PlayerToken.ProjectId, PlayerToken.EnvironmentKind)+"' Hash is '"+Hash+"' and actual generate return '"+tHashActual+"'");
-        }
-        else
-        {
+        } else {
             //NWDLogger.TraceSuccess("["+IdName+ "] " +nameof (NWDRequestRuntime) +"." +nameof (IsValid) +" hash is valid for "+ProjectId+" "+Environment.ToString()+" (player token "+ProjectId+" "+Environment.ToString()+") with salt result  '" +sProjectKeyManager.GetProjectKey(PlayerToken.ProjectId, PlayerToken.EnvironmentKind)+"' Hash is '"+Hash+"' and actual generate return '"+tHashActual+"'");
         }
         return rReturn;
     }
+
     public static NWDRequestRuntime CreateRequestTest(INWDProjectKey sProjectKeyManager, NWDRequestPlayerToken sPlayerToken,
                                                       NWDExchangeOrigin sOrigin,
-                                                      NWDExchangeDevice sDevice)
-    {
+                                                      NWDExchangeDevice sDevice) {
         return new NWDRequestRuntime(sProjectKeyManager, sPlayerToken, NWDExchangeRuntimeKind.Test,
                 new NWDUpPayload(), sOrigin, sDevice);
+    }
+
+    public static NWDRequestRuntime CreateRequestSignIn(INWDProjectKey sProjectKeyManager, NWDRequestPlayerToken sPlayerToken,
+                                                        NWDAccountSign sAccountSign, NWDExchangeOrigin sOrigin,
+                                                        NWDExchangeDevice sDevice) {
+        return new NWDRequestRuntime(sProjectKeyManager, sPlayerToken, NWDExchangeRuntimeKind.SignIn,
+                new NWDUpPayloadAccountSignIn(sAccountSign), sOrigin, sDevice);
+    }
+
+    public static NWDRequestRuntime CreateRequestSignUp(INWDProjectKey sProjectKeyManager, NWDRequestPlayerToken sPlayerToken,
+                                                        NWDAccountSign sAccountSign, NWDExchangeOrigin sOrigin,
+                                                        NWDExchangeDevice sDevice) {
+        return new NWDRequestRuntime(sProjectKeyManager, sPlayerToken, NWDExchangeRuntimeKind.SignUp,
+                new NWDUpPayloadAccountSignUp(sAccountSign), sOrigin, sDevice);
     }
 
 

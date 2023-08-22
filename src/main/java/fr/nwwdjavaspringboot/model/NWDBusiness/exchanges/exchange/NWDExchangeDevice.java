@@ -1,8 +1,10 @@
-package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges;
+package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.exchange;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum NWDExchangeDevice {
+import java.io.Serializable;
+
+public enum NWDExchangeDevice implements Serializable {
     Unknown(0),
     Ios(11),
     Android(12),

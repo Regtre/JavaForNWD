@@ -1,4 +1,4 @@
-package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges;
+package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.exchange;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 

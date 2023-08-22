@@ -1,6 +1,5 @@
-package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges;
+package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.exchange;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.io.Serializable;

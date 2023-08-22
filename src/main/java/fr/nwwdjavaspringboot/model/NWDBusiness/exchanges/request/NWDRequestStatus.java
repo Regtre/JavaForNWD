@@ -1,8 +1,10 @@
-package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges;
+package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum NWDRequestStatus {
+import java.io.Serializable;
+
+public enum NWDRequestStatus implements Serializable {
     /// <summary>
     /// Answer returned if Server is Disabled
     /// </summary>

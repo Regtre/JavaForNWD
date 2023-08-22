@@ -1,4 +1,4 @@
-package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges;
+package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.basic;
 
 
 import fr.nwwdjavaspringboot.model.NWDBusiness.NWDEnvironmentKind;

@@ -1,6 +1,9 @@
 package fr.nwwdjavaspringboot.model.NWDBusiness;
 
-public class NWDProjectInformation implements INWDProjectInformation,INWDProjectKey {
+import fr.nwwdjavaspringboot.model.NWDBusiness.facade.INWDProjectInformation;
+import fr.nwwdjavaspringboot.model.NWDBusiness.facade.INWDProjectKey;
+
+public class NWDProjectInformation implements INWDProjectInformation, INWDProjectKey {
     @Override
     public String GetProjectInformationInstanceName() {
         return null;

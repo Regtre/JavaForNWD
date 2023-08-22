@@ -1,8 +1,9 @@
-package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges;
+package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request;
 
 
-import fr.nwwdjavaspringboot.model.NWDBusiness.INWDProjectInformation;
+import fr.nwwdjavaspringboot.model.NWDBusiness.facade.INWDProjectInformation;
 import fr.nwwdjavaspringboot.model.NWDBusiness.NWDEnvironmentKind;
+import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.exchange.NWDExchangeOrigin;
 
 public class NWDRequestPlayerToken {
     private short AccountRange;
