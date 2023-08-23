@@ -5,10 +5,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.security.*;
 import java.util.Base64;
 
 import com.google.common.base.Strings;
@@ -59,7 +56,8 @@ public class NWDSecurityTools {
             try {
                 tEncrypted = InternalCryptAes(sText, tKey.getBytes(), tVector.getBytes(), tAesSize);
             } catch (IllegalBlockSizeException | BadPaddingException | InvalidKeyException | NoSuchPaddingException |
-                     NoSuchAlgorithmException | InvalidAlgorithmParameterException | IOException e) {
+                     NoSuchAlgorithmException | InvalidAlgorithmParameterException | IOException |
+                     NoSuchProviderException e) {
                 throw new RuntimeException(e);
             }
 
@@ -94,7 +92,7 @@ public class NWDSecurityTools {
         return rReturn.toString();
     }
 
-    private static byte[] InternalCryptAes(String sPlainText, byte[] sKey, byte[] sIv, int sAesSize) throws ArgumentNullException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, IOException {
+    private static byte[] InternalCryptAes(String sPlainText, byte[] sKey, byte[] sIv, int sAesSize) throws ArgumentNullException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, IOException, NoSuchProviderException {
         // Check arguments.
         if (sPlainText == null || sPlainText.isEmpty()) {
             throw new ArgumentNullException("sPlainText null");
@@ -108,8 +106,9 @@ public class NWDSecurityTools {
             throw new ArgumentNullException("sIv null");
         }
 
+        Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
         // Create an AES cipher object
-        Cipher tAes = Cipher.getInstance("AES/ECB/PKCS5Padding");
+        Cipher tAes = Cipher.getInstance("AES/ECB/PKCS7Padding","BC");
 
         // Set the key and IV
         SecretKeySpec keySpec = new SecretKeySpec(sKey, "AES");
