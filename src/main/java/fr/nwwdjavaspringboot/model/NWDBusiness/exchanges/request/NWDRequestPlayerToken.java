@@ -4,7 +4,9 @@ package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request;
 import fr.nwwdjavaspringboot.model.NWDBusiness.facade.INWDProjectInformation;
 import fr.nwwdjavaspringboot.model.NWDBusiness.NWDEnvironmentKind;
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.exchange.NWDExchangeOrigin;
+import lombok.Getter;
 
+@Getter
 public class NWDRequestPlayerToken {
     private short AccountRange;
     private long ProjectId;
@@ -58,56 +60,28 @@ public class NWDRequestPlayerToken {
     }
 
 
-    public short getAccountRange() {
-        return AccountRange;
-    }
-
     public void setAccountRange(short accountRange) {
         AccountRange = accountRange;
-    }
-
-    public long getProjectId() {
-        return ProjectId;
     }
 
     public void setProjectId(long projectId) {
         ProjectId = projectId;
     }
 
-    public long getPlayerReference() {
-        return PlayerReference;
-    }
-
     public void setPlayerReference(long playerReference) {
         PlayerReference = playerReference;
-    }
-
-    public String getToken() {
-        return Token;
     }
 
     public void setToken(String token) {
         Token = token;
     }
 
-    public String getOldToken() {
-        return OldToken;
-    }
-
     public void setOldToken(String oldToken) {
         OldToken = oldToken;
     }
 
-    public NWDEnvironmentKind getEnvironmentKind() {
-        return EnvironmentKind;
-    }
-
     public void setEnvironmentKind(NWDEnvironmentKind environmentKind) {
         EnvironmentKind = environmentKind;
-    }
-
-    public NWDExchangeOrigin getExchangeOrigin() {
-        return ExchangeOrigin;
     }
 
     public void setExchangeOrigin(NWDExchangeOrigin exchangeOrigin) {

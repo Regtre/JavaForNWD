@@ -18,7 +18,6 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import static com.sun.org.apache.xml.internal.serialize.OutputFormat.Defaults.Encoding;
 
 public class NWDSecurityTools {
 

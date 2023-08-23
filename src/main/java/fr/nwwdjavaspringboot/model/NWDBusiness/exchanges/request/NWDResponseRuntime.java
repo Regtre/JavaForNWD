@@ -1,4 +1,6 @@
 package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request;
+
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.gson.Gson;
 import fr.nwwdjavaspringboot.model.NWDBusiness.facade.INWDProjectKey;
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.NWDDownPayload;
@@ -8,13 +10,14 @@ import fr.nwwdjavaspringboot.util.NWDRandom;
 import fr.nwwdjavaspringboot.util.NWDSecurityTools;
 import fr.nwwdjavaspringboot.util.NWDTimestamp;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 
-public class NWDResponseRuntime extends NWDBasicResponse {
-    private String Debug;
-    private NWDExchangeRuntimeKind RuntimeKind;
-    private NWDRequestPlayerToken PlayerToken;
-    private int Duration;
+public class NWDResponseRuntime extends NWDBasicResponse implements Serializable {
+    public String Debug;
+    public NWDExchangeRuntimeKind RuntimeKind;
+    public NWDRequestPlayerToken PlayerToken;
+    public int Duration;
 
     public NWDResponseRuntime() {
         Timestamp = NWDTimestamp.getTimestampUnix();
@@ -24,6 +27,7 @@ public class NWDResponseRuntime extends NWDBasicResponse {
         Timestamp = NWDTimestamp.getTimestampUnix();
         Status = sStatus;
     }
+
     public NWDResponseRuntime(INWDProjectKey sProjectKeyManager, NWDRequestPlayerToken sPlayerToken, NWDExchangeRuntimeKind sRuntimeKind, NWDDownPayload sPayload, NWDRequestStatus sStatus, String sDebug) {
         Timestamp = NWDTimestamp.getTimestampUnix();
         Duration = 0;
@@ -87,6 +91,7 @@ public class NWDResponseRuntime extends NWDBasicResponse {
         //NWDLogger.Information("["+IdName+ "] " +nameof (NWDResponseRuntime) +"
         return rReturn;
     }
+
     protected void secure(INWDProjectKey sProjectKeyManager, String sStamp) {
         Stamp = sStamp;
         Hash = generateHash(sProjectKeyManager);

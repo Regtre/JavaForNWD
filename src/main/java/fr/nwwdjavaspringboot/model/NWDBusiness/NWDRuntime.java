@@ -1,5 +1,6 @@
 package fr.nwwdjavaspringboot.model.NWDBusiness;
 
+import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.basic.NWDBasicResponse;
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request.NWDRequestRuntime;
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request.NWDResponseRuntime;
 import fr.nwwdjavaspringboot.util.SendRequestUtil;
@@ -33,14 +34,14 @@ public class NWDRuntime {
 
     }
 
-    public ResponseEntity<String> postRequestRuntime(NWDRequestRuntime request){
+    public ResponseEntity<NWDResponseRuntime> postRequestRuntime(NWDRequestRuntime request){
         /*      HEADER       */
         RestTemplate restTemplate = new RestTemplate();
 
         /*  ADD AND SEND REQUEST  */
 
         return restTemplate.exchange(URLPost, HttpMethod.POST,
-                new HttpEntity<NWDRequestRuntime>(request, SendRequestUtil.getHeader()), String.class);
+                new HttpEntity<NWDRequestRuntime>(request, SendRequestUtil.getHeader()), NWDResponseRuntime.class);
 
     }
 
