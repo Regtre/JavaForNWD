@@ -11,7 +11,7 @@ public class NWDProjectInformation implements INWDProjectInformation, INWDProjec
 
     @Override
     public long GetProjectId() {
-        return 51376;
+        return 1426718339;
     }
 
     @Override
@@ -26,6 +26,6 @@ public class NWDProjectInformation implements INWDProjectInformation, INWDProjec
 
     @Override
     public String getProjectKey(long sProjectId, NWDEnvironmentKind sEnvironmentKind) {
-        return"LZCUYZAX-DTNNWVQW-FPVRFWUZ-EBMJGOUG-YKBHXRGZ-BRJTAUPB-WAQKUJPT-UMYQMAUG-ELXYPSYV-JDQHNDFF";
+        return "JXGCTJKC-DUJGLIZX-GWINPLYB-MNILSBDW-CYFCHFJN-VMXCDBFL-HJQHLVII-NQCEQYKA-ORPRHKFU-ICABMNUL";
     }
 }

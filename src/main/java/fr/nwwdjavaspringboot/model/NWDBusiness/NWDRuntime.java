@@ -1,6 +1,7 @@
 package fr.nwwdjavaspringboot.model.NWDBusiness;
 
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request.NWDRequestRuntime;
+import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request.NWDResponseRuntime;
 import fr.nwwdjavaspringboot.util.SendRequestUtil;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
@@ -26,8 +27,8 @@ public class NWDRuntime {
 
         /*  ADD REQUEST  */
 
-        ResponseEntity<String> response = restTemplate.exchange(URLPost, HttpMethod.POST,
-                new HttpEntity<NWDRequestRuntime>(request, SendRequestUtil.getHeader()), String.class);
+        ResponseEntity<NWDResponseRuntime> response = restTemplate.exchange(URLPost, HttpMethod.POST,
+                new HttpEntity<NWDRequestRuntime>(request, SendRequestUtil.getHeader()), NWDResponseRuntime.class);
         System.out.println(response);
 
     }
