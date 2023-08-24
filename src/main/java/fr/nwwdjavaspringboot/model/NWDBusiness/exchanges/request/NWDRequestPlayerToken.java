@@ -6,11 +6,13 @@ import fr.nwwdjavaspringboot.model.NWDBusiness.NWDEnvironmentKind;
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.exchange.NWDExchangeOrigin;
 import lombok.Getter;
 
+import java.math.BigInteger;
+
 @Getter
 public class NWDRequestPlayerToken {
     private short accountRange;
     private long projectId;
-    private long playerReference;
+    private BigInteger playerReference;
     private String token;
     private String oldToken;
     private NWDEnvironmentKind environmentKind;
@@ -24,7 +26,7 @@ public class NWDRequestPlayerToken {
     public NWDRequestPlayerToken(INWDProjectInformation sProjectInformation)
     {
         accountRange = 0;
-        playerReference = 0;
+        playerReference = BigInteger.ZERO;
         projectId = sProjectInformation.GetProjectId();
         token = "";
         oldToken = "";
@@ -35,7 +37,7 @@ public class NWDRequestPlayerToken {
     public NWDRequestPlayerToken(long sProjectId, NWDEnvironmentKind sEnvironmentKind)
     {
         accountRange = 0;
-        playerReference = 0;
+        playerReference = BigInteger.ZERO;
         projectId = sProjectId;
         token = "";
         oldToken = "";
@@ -68,7 +70,7 @@ public class NWDRequestPlayerToken {
         this.projectId = projectId;
     }
 
-    public void setPlayerReference(long playerReference) {
+    public void setPlayerReference(BigInteger playerReference) {
         this.playerReference = playerReference;
     }
 

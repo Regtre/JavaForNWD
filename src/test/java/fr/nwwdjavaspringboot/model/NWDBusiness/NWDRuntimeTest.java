@@ -62,6 +62,14 @@ class NWDRuntimeTest {
                  account, exchangeOrigin, exchangeDevice);
         String response = nwdRuntime.postRequestRuntime(signInRequest);
 
+        /* STEP  */
+        System.out.printf(response);
+
+        Gson gson = new GsonBuilder().create();
+        NWDResponseRuntime responseRuntime = gson.fromJson(response, NWDResponseRuntime.class);
+
+        System.out.println("test ->  " + responseRuntime.runtimeKind);
+
     }
 
     @Test
@@ -88,14 +96,7 @@ class NWDRuntimeTest {
        String response = nwdRuntime.postRequestRuntime(signUpRequest);
 
        /* STEP  */
-        System.out.printf(response);
-
         Gson gson = new GsonBuilder().create();
-        JsonElement element = gson.fromJson (response, JsonElement.class);
-        System.out.println("\n\nTEST -> " + element);
-
-
-
         NWDResponseRuntime responseRuntime = gson.fromJson(response, NWDResponseRuntime.class);
 
         System.out.println("test ->  " + responseRuntime.runtimeKind);
