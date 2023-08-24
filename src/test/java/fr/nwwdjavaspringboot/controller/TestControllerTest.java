@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import java.io.IOException;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 @Configuration(value = "static")
 public class TestControllerTest {
 

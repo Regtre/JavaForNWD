@@ -8,13 +8,13 @@ import lombok.Getter;
 
 @Getter
 public class NWDRequestPlayerToken {
-    private short AccountRange;
-    private long ProjectId;
-    private long PlayerReference;
-    private String Token;
-    private String OldToken;
-    private NWDEnvironmentKind EnvironmentKind;
-    private NWDExchangeOrigin ExchangeOrigin;
+    private short accountRange;
+    private long projectId;
+    private long playerReference;
+    private String token;
+    private String oldToken;
+    private NWDEnvironmentKind environmentKind;
+    private NWDExchangeOrigin exchangeOrigin;
 
 //    private NWDSyncInformation PlayerSyncInformation = new NWDSyncInformation();
 //    private NWDSyncInformation StudioSyncInformation = new NWDSyncInformation();
@@ -23,68 +23,68 @@ public class NWDRequestPlayerToken {
 
     public NWDRequestPlayerToken(INWDProjectInformation sProjectInformation)
     {
-        AccountRange = 0;
-        PlayerReference = 0;
-        ProjectId = sProjectInformation.GetProjectId();
-        Token = "";
-        OldToken = "";
-        EnvironmentKind = sProjectInformation.GetProjectEnvironment();
-        ExchangeOrigin = NWDExchangeOrigin.Unknown;
+        accountRange = 0;
+        playerReference = 0;
+        projectId = sProjectInformation.GetProjectId();
+        token = "";
+        oldToken = "";
+        environmentKind = sProjectInformation.GetProjectEnvironment();
+        exchangeOrigin = NWDExchangeOrigin.Unknown;
     }
 
     public NWDRequestPlayerToken(long sProjectId, NWDEnvironmentKind sEnvironmentKind)
     {
-        AccountRange = 0;
-        PlayerReference = 0;
-        ProjectId = sProjectId;
-        Token = "";
-        OldToken = "";
-        EnvironmentKind = sEnvironmentKind;
-        ExchangeOrigin = NWDExchangeOrigin.Unknown;
+        accountRange = 0;
+        playerReference = 0;
+        projectId = sProjectId;
+        token = "";
+        oldToken = "";
+        environmentKind = sEnvironmentKind;
+        exchangeOrigin = NWDExchangeOrigin.Unknown;
     }
 
     public NWDRequestPlayerToken(NWDRequestPlayerToken sToCopy)
     {
         if (sToCopy != null)
         {
-            AccountRange = sToCopy.AccountRange;
-            PlayerReference = sToCopy.PlayerReference;
-            ProjectId = sToCopy.ProjectId;
-            Token = sToCopy.Token;
-            OldToken = sToCopy.OldToken;
+            accountRange = sToCopy.accountRange;
+            playerReference = sToCopy.playerReference;
+            projectId = sToCopy.projectId;
+            token = sToCopy.token;
+            oldToken = sToCopy.oldToken;
             /*PlayerSyncInformation = new NWDSyncInformation(sToCopy.PlayerSyncInformation);
             StudioSyncInformation = new NWDSyncInformation(sToCopy.StudioSyncInformation);*/
-            EnvironmentKind = sToCopy.EnvironmentKind;
-            ExchangeOrigin = sToCopy.ExchangeOrigin;
+            environmentKind = sToCopy.environmentKind;
+            exchangeOrigin = sToCopy.exchangeOrigin;
         }
     }
 
 
     public void setAccountRange(short accountRange) {
-        AccountRange = accountRange;
+        this.accountRange = accountRange;
     }
 
     public void setProjectId(long projectId) {
-        ProjectId = projectId;
+        this.projectId = projectId;
     }
 
     public void setPlayerReference(long playerReference) {
-        PlayerReference = playerReference;
+        this.playerReference = playerReference;
     }
 
     public void setToken(String token) {
-        Token = token;
+        this.token = token;
     }
 
     public void setOldToken(String oldToken) {
-        OldToken = oldToken;
+        this.oldToken = oldToken;
     }
 
     public void setEnvironmentKind(NWDEnvironmentKind environmentKind) {
-        EnvironmentKind = environmentKind;
+        this.environmentKind = environmentKind;
     }
 
     public void setExchangeOrigin(NWDExchangeOrigin exchangeOrigin) {
-        ExchangeOrigin = exchangeOrigin;
+        this.exchangeOrigin = exchangeOrigin;
     }
 }

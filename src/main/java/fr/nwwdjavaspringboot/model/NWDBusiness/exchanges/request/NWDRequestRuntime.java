@@ -24,15 +24,15 @@ public class NWDRequestRuntime extends NWDBasicRequest {
     public NWDRequestPlayerToken PlayerToken;
 
     public NWDRequestRuntime() {
-        Timestamp = NWDTimestamp.getTimestampUnix();
+        timestamp = NWDTimestamp.getTimestampUnix();
     }
 
 
     public NWDRequestRuntime(INWDProjectKey sProjectKeyManager, NWDRequestPlayerToken sPlayerToken, NWDExchangeRuntimeKind sKind,
                              NWDUpPayload sUpPayload, NWDExchangeOrigin sOrigin, NWDExchangeDevice sDevice) {
-        Timestamp = NWDTimestamp.getTimestampUnix();
-        ProjectId = sPlayerToken.getProjectId();
-        Environment = sPlayerToken.getEnvironmentKind();
+        timestamp = NWDTimestamp.getTimestampUnix();
+        projectId = sPlayerToken.getProjectId();
+        environment = sPlayerToken.getEnvironmentKind();
         PlayerToken = sPlayerToken;
         Kind = sKind;
         Origin = sOrigin;
@@ -41,23 +41,23 @@ public class NWDRequestRuntime extends NWDBasicRequest {
             setPayload(sUpPayload);
         }
 
-        if (Payload == null || Payload.isEmpty()) {
-            Payload = "";
+        if (payload == null || payload.isEmpty()) {
+            payload = "";
         }
-        if (ProjectId != 0) {
+        if (projectId != 0) {
             Secure(sProjectKeyManager, NWDRandom.RandomStringCypher(32));
         }
     }
 
     public void setPayload(NWDUpPayload sUpPayload) {
         Gson gson = new Gson();
-        Payload = gson.toJson(sUpPayload);
+        payload = gson.toJson(sUpPayload);
     }
 
     public <T extends NWDUpPayload> T GetPayload(INWDProjectKey sProjectKeyManager, Type payloadType) {
         T rReturn = null;
         if (IsValid(sProjectKeyManager)) {
-            rReturn = new Gson().fromJson(Payload, payloadType);
+            rReturn = new Gson().fromJson(payload, payloadType);
         } else {
             //NWDLogger.Warning("["+IdName+ "] " +nameof (NWDRequestRuntime) +" "+nameof(GetPayload)+" NOT POSSIBLE TO GET OBJECT! for "+ProjectId+" "+Environment.ToString()+" (player token "+ProjectId+" "+Environment.ToString()+") with salt result  '" +sProjectKeyManager.GetProjectKey(PlayerToken.ProjectId, PlayerToken.EnvironmentKind)+"' " + Payload);
         }
@@ -68,20 +68,20 @@ public class NWDRequestRuntime extends NWDBasicRequest {
         String rReturn;
         String tPayLoadPrint;
         if (PlayerToken == null) {
-            PlayerToken = new NWDRequestPlayerToken(ProjectId, Environment);
+            PlayerToken = new NWDRequestPlayerToken(projectId, environment);
         }
 
-        if (Payload == null) {
-            Payload = "";
+        if (payload == null) {
+            payload = "";
         }
 
         // string tSaltKey = sProjectKeyManager.GetProjectKey(PlayerToken.ProjectId, PlayerToken.EnvironmentKind);
-        String tSaltKey = sProjectKeyManager.getProjectKey(ProjectId, Environment);
+        String tSaltKey = sProjectKeyManager.getProjectKey(projectId, environment);
         if (tSaltKey != null && !tSaltKey.isEmpty()) {
-            tPayLoadPrint = NWDSecurityTools.GenerateSha(Payload);
+            tPayLoadPrint = NWDSecurityTools.GenerateSha(payload);
             rReturn = NWDSecurityTools.GenerateSha(
                     tPayLoadPrint
-                            + Stamp
+                            + stamp
                             + tSaltKey
                             + Kind.toString()
                             + PlayerToken.getToken()
@@ -100,16 +100,16 @@ public class NWDRequestRuntime extends NWDBasicRequest {
     }
 
     public void Secure(INWDProjectKey sProjectKeyManager, String sStamp) {
-        Stamp = sStamp;
-        Hash = GenerateHash(sProjectKeyManager);
+        stamp = sStamp;
+        hash = GenerateHash(sProjectKeyManager);
     }
 
     public boolean IsValid(INWDProjectKey sProjectKeyManager) {
         boolean rReturn = false;
         String tHashActual = GenerateHash(sProjectKeyManager);
-        if (Hash != null && !Hash.isEmpty()) {
-            if (tHashActual == Hash) {
-                if (PlayerToken.getProjectId() == ProjectId) {
+        if (hash != null && !hash.isEmpty()) {
+            if (tHashActual == hash) {
+                if (PlayerToken.getProjectId() == projectId) {
                     rReturn = true;
                 }
             }

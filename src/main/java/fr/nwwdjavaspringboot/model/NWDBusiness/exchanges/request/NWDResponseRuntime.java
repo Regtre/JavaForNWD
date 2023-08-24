@@ -1,6 +1,5 @@
 package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request;
 
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.gson.Gson;
 import fr.nwwdjavaspringboot.model.NWDBusiness.facade.INWDProjectKey;
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.NWDDownPayload;
@@ -14,47 +13,47 @@ import java.io.Serializable;
 import java.lang.reflect.Type;
 
 public class NWDResponseRuntime extends NWDBasicResponse implements Serializable {
-    public String Debug;
-    public NWDExchangeRuntimeKind RuntimeKind;
-    public NWDRequestPlayerToken PlayerToken;
-    public int Duration;
+    public transient String debug;
+    public NWDExchangeRuntimeKind runtimeKind;
+    public NWDRequestPlayerToken playerToken;
+    public int duration;
 
     public NWDResponseRuntime() {
-        Timestamp = NWDTimestamp.getTimestampUnix();
+        timestamp = NWDTimestamp.getTimestampUnix();
     }
 
     public NWDResponseRuntime(NWDRequestStatus sStatus) {
-        Timestamp = NWDTimestamp.getTimestampUnix();
-        Status = sStatus;
+        timestamp = NWDTimestamp.getTimestampUnix();
+        status = sStatus;
     }
 
     public NWDResponseRuntime(INWDProjectKey sProjectKeyManager, NWDRequestPlayerToken sPlayerToken, NWDExchangeRuntimeKind sRuntimeKind, NWDDownPayload sPayload, NWDRequestStatus sStatus, String sDebug) {
-        Timestamp = NWDTimestamp.getTimestampUnix();
-        Duration = 0;
-        ProjectId = sPlayerToken.getProjectId();
-        Environment = sPlayerToken.getEnvironmentKind();
-        PlayerToken = sPlayerToken;
-        RuntimeKind = sRuntimeKind;
+        timestamp = NWDTimestamp.getTimestampUnix();
+        duration = 0;
+        projectId = sPlayerToken.getProjectId();
+        environment = sPlayerToken.getEnvironmentKind();
+        playerToken = sPlayerToken;
+        runtimeKind = sRuntimeKind;
         if (sPayload != null) {
             setPayload(sPayload);
         }
-        if (Payload.isEmpty()) {
-            Payload = "";
+        if (payload.isEmpty()) {
+            payload = "";
         }
-        Status = sStatus;
-        if (ProjectId != 0) {
+        status = sStatus;
+        if (projectId != 0) {
             secure(sProjectKeyManager, NWDRandom.RandomStringCypher(32));
         }
     }
 
     protected void setPayload(NWDDownPayload sPayload) {
-        Payload = new Gson().toJson(sPayload);
+        payload = new Gson().toJson(sPayload);
     }
 
     public <T extends NWDDownPayload> T getPayload(INWDProjectKey sProjectKeyManager, Type payloadType) {
         T rReturn = null;
         if (isValid(sProjectKeyManager)) {
-            rReturn = new Gson().fromJson(Payload, payloadType);
+            rReturn = new Gson().fromJson(payload, payloadType);
         } else {
             //NWDLogger.Warning("["+IdName+ "] " +nameof (NWDResponseRuntime) +" "+nameof(GetPay}
         }
@@ -64,24 +63,24 @@ public class NWDResponseRuntime extends NWDBasicResponse implements Serializable
     private String generateHash(INWDProjectKey sProjectKeyManager) {
         String rReturn;
         String tPayLoadPrint;
-        if (PlayerToken == null) {
-            PlayerToken = new NWDRequestPlayerToken(ProjectId, Environment);
+        if (playerToken == null) {
+            playerToken = new NWDRequestPlayerToken(projectId, environment);
         }
-        if (Payload == null) {
-            Payload = "";
+        if (payload == null) {
+            payload = "";
         }
-        String tSaltKey = sProjectKeyManager.getProjectKey(ProjectId, Environment);
+        String tSaltKey = sProjectKeyManager.getProjectKey(projectId, environment);
         if (tSaltKey != null && !tSaltKey.isEmpty()) {
-            tPayLoadPrint = NWDSecurityTools.GenerateSha(Payload);
+            tPayLoadPrint = NWDSecurityTools.GenerateSha(payload);
             rReturn = NWDSecurityTools.GenerateSha(
                     tPayLoadPrint
-                            + Stamp
+                            + stamp
                             + tSaltKey
-                            + Status.toString()
-                            + RuntimeKind.toString()
-                            + PlayerToken.getToken()
-                            + PlayerToken.getAccountRange()
-                            + PlayerToken.getEnvironmentKind().toString()
+                            + status.toString()
+                            + runtimeKind.toString()
+                            + playerToken.getToken()
+                            + playerToken.getAccountRange()
+                            + playerToken.getEnvironmentKind().toString()
                     // + PlayerToken.DataTrack
             );
         } else {
@@ -93,15 +92,15 @@ public class NWDResponseRuntime extends NWDBasicResponse implements Serializable
     }
 
     protected void secure(INWDProjectKey sProjectKeyManager, String sStamp) {
-        Stamp = sStamp;
-        Hash = generateHash(sProjectKeyManager);
+        stamp = sStamp;
+        hash = generateHash(sProjectKeyManager);
     }
 
     public boolean isValid(INWDProjectKey sProjectKeyManager) {
         boolean rReturn = false;
         String tHashActual = generateHash(sProjectKeyManager);
-        if (Hash != null && !Hash.isEmpty()) {
-            if (tHashActual.equals(Hash)) {
+        if (hash != null && !hash.isEmpty()) {
+            if (tHashActual.equals(hash)) {
                 rReturn = true;
             }
         }
@@ -114,4 +113,35 @@ public class NWDResponseRuntime extends NWDBasicResponse implements Serializable
     }
 
 
+    public String getDebug() {
+        return debug;
+    }
+
+    public void setDebug(String debug) {
+        this.debug = debug;
+    }
+
+    public NWDExchangeRuntimeKind getRuntimeKind() {
+        return runtimeKind;
+    }
+
+    public void setRuntimeKind(NWDExchangeRuntimeKind runtimeKind) {
+        this.runtimeKind = runtimeKind;
+    }
+
+    public NWDRequestPlayerToken getPlayerToken() {
+        return playerToken;
+    }
+
+    public void setPlayerToken(NWDRequestPlayerToken playerToken) {
+        this.playerToken = playerToken;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 }

@@ -1,9 +1,14 @@
 package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.exchange;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum NWDExchangeRuntimeKind implements Serializable {
 //    None(NWDExchangeKind.None.getValue()),
 //    Test(NWDExchangeKind.Test.getValue()),
@@ -16,6 +21,7 @@ public enum NWDExchangeRuntimeKind implements Serializable {
     AccountChangeRange(3),
     SignOut(10),
     SignIn(11),
+    @SerializedName("12")
     SignUp(12),
     SignLost(13),
     SignAdd(14),
@@ -37,8 +43,19 @@ public enum NWDExchangeRuntimeKind implements Serializable {
     GetRelationship(53);
     private final int value;
 
-    NWDExchangeRuntimeKind(int value) {
+    @JsonCreator
+    NWDExchangeRuntimeKind( int value) {
         this.value = value;
+    }
+
+    @JsonCreator
+    public static NWDExchangeRuntimeKind forValues( int value) {
+        for (NWDExchangeRuntimeKind nwdExchangeRuntimeKind : NWDExchangeRuntimeKind.values()) {
+            if (nwdExchangeRuntimeKind.value == value) {
+                return nwdExchangeRuntimeKind;
+            }
+        }
+        return null;
     }
 
     @JsonValue

@@ -1,5 +1,8 @@
 package fr.nwwdjavaspringboot.model.NWDBusiness;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.*;
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.account.NWDAccountSign;
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.exchange.NWDExchangeDevice;
@@ -7,6 +10,7 @@ import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.exchange.NWDExchangeOri
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.exchange.NWDExchangeRuntimeKind;
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request.NWDRequestPlayerToken;
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request.NWDRequestRuntime;
+import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request.NWDResponseRuntime;
 import fr.nwwdjavaspringboot.model.NWDBusiness.facade.INWDProjectKey;
 import fr.nwwdjavaspringboot.util.ArgumentNullException;
 import org.junit.jupiter.api.BeforeEach;
@@ -54,18 +58,47 @@ class NWDRuntimeTest {
 
     @Test
     public void signInTest() throws IOException {
-        NWDRequestRuntime signInRequest = new NWDRequestRuntime(
-                projectKey, playerToken, NWDExchangeRuntimeKind.SignIn, new NWDUpPayload(), exchangeOrigin, exchangeDevice
-        );
-        nwdRuntime.post(signInRequest);
+        NWDRequestRuntime signInRequest = NWDRequestRuntime.CreateRequestSignIn(projectKey, playerToken,
+                 account, exchangeOrigin, exchangeDevice);
+        String response = nwdRuntime.postRequestRuntime(signInRequest);
 
+    }
+
+    @Test
+    public void SerializeAndDeSerializerTest(){
+        String jsonString = """
+      {
+        "id": 1,
+        "firstName": "lokesh",
+        "lastName": "gupta",
+        "dateOfBirth": "lived1999-01-01"
+      }""";
+
+        Gson gson = new GsonBuilder().create();
+
+        User user = gson.fromJson(jsonString, User.class);
+
+        System.out.println(user.firstName);
     }
 
     @Test
     public void signUpTest() throws IOException, ArgumentNullException {
         NWDRequestRuntime signUpRequest = NWDRequestRuntime.CreateRequestSignUp(projectKey, playerToken,
                 account, exchangeOrigin, exchangeDevice);
-        System.out.println(nwdRuntime.postRequestRuntime(signUpRequest).toString());
+       String response = nwdRuntime.postRequestRuntime(signUpRequest);
+
+       /* STEP  */
+        System.out.printf(response);
+
+        Gson gson = new GsonBuilder().create();
+        JsonElement element = gson.fromJson (response, JsonElement.class);
+        System.out.println("\n\nTEST -> " + element);
+
+
+
+        NWDResponseRuntime responseRuntime = gson.fromJson(response, NWDResponseRuntime.class);
+
+        System.out.println("test ->  " + responseRuntime.runtimeKind);
     }
 
 }

@@ -38,8 +38,8 @@ public class TestRequest {
         /*  ADD REQUEST  */
         DataName name = new DataName("Rémy");
 
-        ResponseEntity<String> foo2 = restTemplate.exchange(URLPost, HttpMethod.POST, new HttpEntity<DataName>(name, SendRequestUtil.getHeader()), String.class);
-        System.out.println(foo2);
+        ResponseEntity<DataName> foo2 = restTemplate.exchange(URLPost, HttpMethod.POST, new HttpEntity<DataName>(name, SendRequestUtil.getHeader()), DataName.class);
+        System.out.println(foo2.getBody().name);
 
     }
 

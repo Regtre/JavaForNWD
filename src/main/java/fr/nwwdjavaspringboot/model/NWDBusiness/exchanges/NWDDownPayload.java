@@ -16,7 +16,9 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NWDDownPayload implements Serializable  {
 
-    @JsonProperty("AccountServiceList")
-    public List<NWDAccountService> AccountServiceList = new ArrayList<NWDAccountService>();;
+
+    /*@JsonProperty("AccountServiceList")
+    public List<NWDAccountService> AccountServiceList = new ArrayList<NWDAccountService>();;*/
+    public NWDDownPayload(){}
 
 }

@@ -9,8 +9,8 @@ import java.io.Serializable;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
 public abstract class NWDBasicResponse extends NWDBasicExchange implements Serializable {
-    public NWDRequestStatus Status = NWDRequestStatus.None;
-    public String ServerIdentity;
+    public NWDRequestStatus status = NWDRequestStatus.None;
+    public String serverIdentity;
     public String Debug;
 }
 
