@@ -4,23 +4,24 @@ package fr.nwwdjavaspringboot.model.NWDBusiness;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum NWDEnvironmentKind implements Serializable {
 
-    @JsonProperty("Dev")
+    @SerializedName("0")
     Dev(0),
-    @JsonProperty("PlayTest")
+    @SerializedName("1")
     PlayTest(1),
-    @JsonProperty("Qualification")
+    @SerializedName("2")
     Qualification(2),
-    @JsonProperty("PreProduction")
+    @SerializedName("3")
     PreProduction(3),
-    @JsonProperty("Production")
+    @SerializedName("4")
     Production(4),
-    @JsonProperty("PostProduction")
+    @SerializedName("5")
     PostProduction(5);
 
     private final int value;

@@ -2,6 +2,7 @@ package fr.nwwdjavaspringboot.controller;
 
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.NWDPlayerDataStorage;
 import fr.nwwdjavaspringboot.repository.PlayerDataRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
@@ -18,13 +19,6 @@ import java.util.List;
 @RequestMapping("playerData")
 public class PlayerDataController {
 
-/*
-    private final PlayerDataRepository repository;
-
-    PlayerDataController(PlayerDataRepository repository) {
-        this.repository = repository;
-    }
-*/
 
     @GetMapping("/")
     public String page(Model model){
