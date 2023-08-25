@@ -143,5 +143,12 @@ public class NWDRequestRuntime extends NWDBasicRequest {
                 new NWDUpPayloadAccountSignUp(sAccountSign), sOrigin, sDevice);
     }
 
+    public static NWDRequestRuntime CreateGetAllPlayerData(INWDProjectKey sProjectKeyManager,NWDRequestPlayerToken sPlayerToken,
+                                                           NWDExchangeOrigin sOrigin ,
+                                                           NWDExchangeDevice sDevice )
+    {
+        return new NWDRequestRuntime( sProjectKeyManager, sPlayerToken, NWDExchangeRuntimeKind.GetAllPlayerData,
+                new NWDUpPayloadDataSyncByIncrement() { }, sOrigin, sDevice);
+    }
 
 }

@@ -2,16 +2,18 @@ package fr.nwwdjavaspringboot.model.NWDBusiness;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.math.BigInteger;
+
 public class NWDDatabaseBasicModel {
 
-    private long Creation;
-    private long Modification;
-    private boolean Active;
-    private boolean Trashed;
-    public long Reference;
+    public BigInteger Creation;
+    public BigInteger Modification;
+    public boolean Active;
+    public boolean Trashed;
+    public BigInteger Reference;
 
     @JsonIgnore
-    public long RowId;
+    public BigInteger RowId;
 
     public NWDDatabaseBasicModel() {}
 
@@ -24,19 +26,19 @@ public class NWDDatabaseBasicModel {
         Reference = sOther.Reference;
         RowId = sOther.RowId;
     }
-    public long getCreation() {
+    public BigInteger getCreation() {
         return Creation;
     }
 
-    public void setCreation(long creation) {
+    public void setCreation(BigInteger creation) {
         Creation = creation;
     }
 
-    public long getModification() {
+    public BigInteger getModification() {
         return Modification;
     }
 
-    public void setModification(long modification) {
+    public void setModification(BigInteger modification) {
         Modification = modification;
     }
 
@@ -56,19 +58,19 @@ public class NWDDatabaseBasicModel {
         Trashed = trashed;
     }
 
-    public long getReference() {
+    public BigInteger getReference() {
         return Reference;
     }
 
-    public void setReference(long reference) {
+    public void setReference(BigInteger reference) {
         Reference = reference;
     }
 
-    public long getRowId() {
+    public BigInteger getRowId() {
         return RowId;
     }
 
-    public void setRowId(long rowId) {
+    public void setRowId(BigInteger rowId) {
         RowId = rowId;
     }
 }

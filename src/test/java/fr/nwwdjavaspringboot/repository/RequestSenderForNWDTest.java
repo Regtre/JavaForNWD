@@ -1,10 +1,12 @@
 package fr.nwwdjavaspringboot.repository;
 
 import fr.nwwdjavaspringboot.RuntimeCreatorForNWD;
+import fr.nwwdjavaspringboot.model.NWDBusiness.NWDProjectInformation;
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request.NWDRequestPlayerToken;
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request.NWDRequestStatus;
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request.NWDResponseRuntime;
 import fr.nwwdjavaspringboot.util.ArgumentNullException;
+import fr.nwwdjavaspringboot.util.SendRequestUtil;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -35,9 +37,11 @@ public class RequestSenderForNWDTest {
 
     @Test
     public void getAllPlayerDataSendTest() {
-        String token = requestSenderForNWD.getToken();
+        requestSenderForNWD.getToken();
+        NWDRequestPlayerToken token = requestSenderForNWD.playerToken;
         NWDResponseRuntime nwdResponseRuntime = requestSenderForNWD.send(runtimeCreatorForNWD.getAllPlayerDataRequest(token));
         assertNotSame(nwdResponseRuntime.status, NWDRequestStatus.Error);
+        NWDDownPayloadDataSyncByIncrement data =nwdResponseRuntime.getPayload(new NWDProjectInformation(),NWDDownPayloadDataSyncByIncrement.class);
         NWDRequestPlayerToken playerToken = nwdResponseRuntime.playerToken;
     }
 

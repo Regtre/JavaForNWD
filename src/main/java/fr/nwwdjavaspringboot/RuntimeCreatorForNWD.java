@@ -64,7 +64,7 @@ public class RuntimeCreatorForNWD {
         return createRequest(token,NWDExchangeRuntimeKind.GetAllData);
     }
 
-    public NWDRequestRuntime getAllPlayerDataRequest(String token) {
-        return createRequest(token,NWDExchangeRuntimeKind.GetAllPlayerData);
+    public NWDRequestRuntime getAllPlayerDataRequest(NWDRequestPlayerToken pToken) {
+        return NWDRequestRuntime.CreateGetAllPlayerData(projectKey, pToken, exchangeOrigin, exchangeDevice);
     }
 }

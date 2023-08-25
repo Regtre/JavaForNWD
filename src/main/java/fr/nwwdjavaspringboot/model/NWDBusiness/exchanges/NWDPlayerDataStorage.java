@@ -4,9 +4,9 @@ import fr.nwwdjavaspringboot.model.NWDBusiness.facade.INWDAccountDependence;
 
 public class NWDPlayerDataStorage extends NWDDataBasicStorageModel implements INWDAccountDependence {
 
-    public long Account;
-    public int Range;
-    public NWDPlayerDataProcessKind Process = NWDPlayerDataProcessKind.None;
+    public long account;
+    public int range;
+    public NWDPlayerDataProcessKind process = NWDPlayerDataProcessKind.None;
     public NWDPlayerDataStorage()
     {
     }

@@ -23,7 +23,7 @@ import java.nio.charset.Charset;
 public class RequestSenderForNWD {
 
     private final RuntimeCreatorForNWD customProperties;
-    NWDRequestPlayerToken playerToken;
+    public NWDRequestPlayerToken playerToken;
     private final RestTemplate restTemplate = new RestTemplate();
 
 

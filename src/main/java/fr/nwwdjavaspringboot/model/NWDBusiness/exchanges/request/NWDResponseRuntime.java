@@ -112,6 +112,21 @@ public class NWDResponseRuntime extends NWDBasicResponse implements Serializable
         return rReturn;
     }
 
+    public <T extends NWDDownPayload> T GetPayload(INWDProjectKey sProjectKeyManager, Class<T> type)
+    {
+        T rReturn = null;
+        if (isValid( sProjectKeyManager))
+        {
+            Gson gson = new Gson();
+            rReturn = gson.fromJson(payload, type);
+            /*rReturn = JsonConvert.DeserializeObject<T>(Payload);*/
+        }
+        else
+        {
+            //NWDLogger.Warning("["+IdName+ "] " +nameof (NWDResponseRuntime) +" "+nameof(GetPayload)+" NOT POSSIBLE TO GET OBJECT! for "+ProjectId+" "+Environment.ToString()+" (player token "+ProjectId+" "+Environment.ToString()+") with salt result  '" +sProjectKeyManager.GetProjectKey(PlayerToken.ProjectId, PlayerToken.EnvironmentKind)+"' " + Payload);
+        }
+        return rReturn;
+    }
 
     public String getDebug() {
         return debug;
