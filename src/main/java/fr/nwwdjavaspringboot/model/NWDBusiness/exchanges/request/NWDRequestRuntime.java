@@ -15,6 +15,8 @@ import fr.nwwdjavaspringboot.util.NWDSecurityTools;
 import fr.nwwdjavaspringboot.util.NWDTimestamp;
 
 import java.lang.reflect.Type;
+import java.math.BigInteger;
+import java.util.Objects;
 
 public class NWDRequestRuntime extends NWDBasicRequest {
 
@@ -44,7 +46,7 @@ public class NWDRequestRuntime extends NWDBasicRequest {
         if (payload == null || payload.isEmpty()) {
             payload = "";
         }
-        if (projectId != 0) {
+        if (!Objects.equals(projectId, BigInteger.ZERO)) {
             Secure(sProjectKeyManager, NWDRandom.RandomStringCypher(32));
         }
     }
@@ -143,12 +145,19 @@ public class NWDRequestRuntime extends NWDBasicRequest {
                 new NWDUpPayloadAccountSignUp(sAccountSign), sOrigin, sDevice);
     }
 
-    public static NWDRequestRuntime CreateGetAllPlayerData(INWDProjectKey sProjectKeyManager,NWDRequestPlayerToken sPlayerToken,
-                                                           NWDExchangeOrigin sOrigin ,
-                                                           NWDExchangeDevice sDevice )
-    {
-        return new NWDRequestRuntime( sProjectKeyManager, sPlayerToken, NWDExchangeRuntimeKind.GetAllPlayerData,
-                new NWDUpPayloadDataSyncByIncrement() { }, sOrigin, sDevice);
+    public static NWDRequestRuntime CreateGetAllPlayerData(INWDProjectKey sProjectKeyManager, NWDRequestPlayerToken sPlayerToken,
+                                                           NWDExchangeOrigin sOrigin,
+                                                           NWDExchangeDevice sDevice) {
+        return new NWDRequestRuntime(sProjectKeyManager, sPlayerToken, NWDExchangeRuntimeKind.GetAllPlayerData,
+                new NWDUpPayloadDataSyncByIncrement() {
+                }, sOrigin, sDevice);
+    }
+
+    public static NWDRequestRuntime CreateRequestSyncDataByIncrement(INWDProjectKey sProjectKeyManager, NWDRequestPlayerToken sPlayerToken,
+                                                                     NWDUpPayloadDataSyncByIncrement sUpPayloadDataSyncByIncrement, NWDExchangeOrigin sOrigin,
+                                                                     NWDExchangeDevice sDevice) {
+        return new NWDRequestRuntime(sProjectKeyManager, sPlayerToken, NWDExchangeRuntimeKind.SyncDataByIncrement,
+                sUpPayloadDataSyncByIncrement, sOrigin, sDevice);
     }
 
 }

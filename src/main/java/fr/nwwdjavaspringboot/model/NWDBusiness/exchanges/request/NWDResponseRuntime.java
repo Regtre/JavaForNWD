@@ -11,6 +11,7 @@ import fr.nwwdjavaspringboot.util.NWDTimestamp;
 
 import java.io.Serializable;
 import java.lang.reflect.Type;
+import java.math.BigInteger;
 
 public class NWDResponseRuntime extends NWDBasicResponse implements Serializable {
     public transient String debug;
@@ -41,7 +42,7 @@ public class NWDResponseRuntime extends NWDBasicResponse implements Serializable
             payload = "";
         }
         status = sStatus;
-        if (projectId != 0) {
+        if (!projectId.equals(BigInteger.ZERO)) {
             secure(sProjectKeyManager, NWDRandom.RandomStringCypher(32));
         }
     }

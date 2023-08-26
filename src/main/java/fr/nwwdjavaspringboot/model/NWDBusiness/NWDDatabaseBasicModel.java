@@ -1,76 +1,54 @@
 package fr.nwwdjavaspringboot.model.NWDBusiness;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
 
 import java.math.BigInteger;
 
+@Getter
 public class NWDDatabaseBasicModel {
 
-    public BigInteger Creation;
-    public BigInteger Modification;
-    public boolean Active;
-    public boolean Trashed;
-    public BigInteger Reference;
+    public BigInteger creation;
+    public BigInteger modification;
+    public boolean active;
+    public boolean trashed;
+    public BigInteger reference;
 
-    @JsonIgnore
-    public BigInteger RowId;
+    public BigInteger rowId;
 
     public NWDDatabaseBasicModel() {}
 
     public void CopyFrom(NWDDatabaseBasicModel sOther)
     {
-        Creation = sOther.Creation;
-        Modification = sOther.Modification;
-        Active = sOther.Active;
-        Trashed = sOther.Trashed;
-        Reference = sOther.Reference;
-        RowId = sOther.RowId;
-    }
-    public BigInteger getCreation() {
-        return Creation;
+        creation = sOther.creation;
+        modification = sOther.modification;
+        active = sOther.active;
+        trashed = sOther.trashed;
+        reference = sOther.reference;
+        rowId = sOther.rowId;
     }
 
     public void setCreation(BigInteger creation) {
-        Creation = creation;
-    }
-
-    public BigInteger getModification() {
-        return Modification;
+        this.creation = creation;
     }
 
     public void setModification(BigInteger modification) {
-        Modification = modification;
-    }
-
-    public boolean isActive() {
-        return Active;
+        this.modification = modification;
     }
 
     public void setActive(boolean active) {
-        Active = active;
-    }
-
-    public boolean isTrashed() {
-        return Trashed;
+        this.active = active;
     }
 
     public void setTrashed(boolean trashed) {
-        Trashed = trashed;
-    }
-
-    public BigInteger getReference() {
-        return Reference;
+        this.trashed = trashed;
     }
 
     public void setReference(BigInteger reference) {
-        Reference = reference;
-    }
-
-    public BigInteger getRowId() {
-        return RowId;
+        this.reference = reference;
     }
 
     public void setRowId(BigInteger rowId) {
-        RowId = rowId;
+        this.rowId = rowId;
     }
 }

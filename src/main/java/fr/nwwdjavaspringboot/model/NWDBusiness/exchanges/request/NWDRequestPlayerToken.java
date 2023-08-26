@@ -11,7 +11,7 @@ import java.math.BigInteger;
 @Getter
 public class NWDRequestPlayerToken {
     private short accountRange;
-    private long projectId;
+    private BigInteger projectId;
     private BigInteger playerReference;
     private String token;
     private String oldToken;
@@ -34,7 +34,7 @@ public class NWDRequestPlayerToken {
         exchangeOrigin = NWDExchangeOrigin.Unknown;
     }
 
-    public NWDRequestPlayerToken(long sProjectId, NWDEnvironmentKind sEnvironmentKind)
+    public NWDRequestPlayerToken(BigInteger sProjectId, NWDEnvironmentKind sEnvironmentKind)
     {
         accountRange = 0;
         playerReference = BigInteger.ZERO;
@@ -66,7 +66,7 @@ public class NWDRequestPlayerToken {
         this.accountRange = accountRange;
     }
 
-    public void setProjectId(long projectId) {
+    public void setProjectId(BigInteger projectId) {
         this.projectId = projectId;
     }
 

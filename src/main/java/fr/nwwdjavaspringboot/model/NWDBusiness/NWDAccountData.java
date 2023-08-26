@@ -6,14 +6,14 @@ import lombok.Getter;
 @Getter
 public class NWDAccountData extends NWDBasicModel implements INWDAccountDependence {
 
-    public long Account;
-    public short Range;
+    public long account;
+    public short range;
 
     public void setAccount(long account) {
-        Account = account;
+        this.account = account;
     }
 
     public void setRange(short range) {
-        Range = range;
+        this.range = range;
     }
 }

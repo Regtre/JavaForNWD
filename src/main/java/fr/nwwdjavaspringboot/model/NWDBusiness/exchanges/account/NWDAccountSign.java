@@ -5,6 +5,7 @@ import fr.nwwdjavaspringboot.util.ArgumentNullException;
 import fr.nwwdjavaspringboot.util.NWDSecurityTools;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 
 public class NWDAccountSign extends NWDAccountData {
 
@@ -98,14 +99,14 @@ public class NWDAccountSign extends NWDAccountData {
     /// <param name="sProject"></param>
     /// <param name="sDeviceName"></param>
     /// <returns></returns>
-    public static NWDAccountSign CreateDeviceId(String sDeviceId, long sProject, String sDeviceName) throws ArgumentNullException, UnsupportedEncodingException {
+    public static NWDAccountSign CreateDeviceId(String sDeviceId, BigInteger sProject, String sDeviceName) throws ArgumentNullException, UnsupportedEncodingException {
         NWDAccountSign rReturn = new NWDAccountSign();
         String tType = DeviceTypeObfuscation(NWDAccountSignType.DeviceId);
         rReturn.projectId = sProject;
         if (sDeviceName.isEmpty() || sDeviceName == "") {
             sDeviceName = NWDAccountSignType.DeviceId.toString();
         }
-        rReturn.Name = NWDSecurityTools.CryptAes(sDeviceName, Long.toString(sProject), Long.toString(sProject));
+        rReturn.Name = NWDSecurityTools.CryptAes(sDeviceName, sProject.toString(), sProject.toString());
         rReturn.SignType = NWDAccountSignType.DeviceId;
         rReturn.LoginHash = tType + "-" + NWDSecurityTools.GenerateSha(sDeviceId + sProject) + "-" +
                 NWDSecurityTools.GenerateSha(sDeviceId);
@@ -124,10 +125,10 @@ public class NWDAccountSign extends NWDAccountData {
     /// <param name="sPassword"></param>
     /// <param name="sProject"></param>
     /// <returns></returns>
-    public static NWDAccountSign CreateEmailPassword(String sEmail, String sPassword, long sProject) throws ArgumentNullException, UnsupportedEncodingException {
+    public static NWDAccountSign CreateEmailPassword(String sEmail, String sPassword, BigInteger sProject) throws ArgumentNullException, UnsupportedEncodingException {
         NWDAccountSign rReturn = new NWDAccountSign();
         rReturn.projectId = sProject;
-        rReturn.Name = NWDSecurityTools.CryptAes(EmailToPartialString(sEmail), Long.toString(sProject), Long.toString(sProject));
+        rReturn.Name = NWDSecurityTools.CryptAes(EmailToPartialString(sEmail), sProject.toString(), sProject.toString());
         rReturn.SignType = NWDAccountSignType.EmailPassword;
         rReturn.LoginHash = NWDSecurityTools.GenerateSha(sEmail + sProject) + "-" +
                 NWDSecurityTools.GenerateSha(sEmail);
@@ -147,10 +148,10 @@ public class NWDAccountSign extends NWDAccountData {
     /// <param name="sPassword"></param>
     /// <param name="sProject"></param>
     /// <returns></returns>
-    public static NWDAccountSign CreateLoginEmailPassword(String sLogin, String sEmail, String sPassword, long sProject) throws ArgumentNullException, UnsupportedEncodingException {
+    public static NWDAccountSign CreateLoginEmailPassword(String sLogin, String sEmail, String sPassword, BigInteger sProject) throws ArgumentNullException, UnsupportedEncodingException {
         NWDAccountSign rReturn = new NWDAccountSign();
         rReturn.projectId = sProject;
-        rReturn.Name = NWDSecurityTools.CryptAes(sLogin + " " + EmailToPartialString(sEmail),  Long.toString(sProject),  Long.toString(sProject));
+        rReturn.Name = NWDSecurityTools.CryptAes(sLogin + " " + EmailToPartialString(sEmail), sProject.toString(), sProject.toString());
         rReturn.SignType = NWDAccountSignType.LoginEmailPassword;
         rReturn.LoginHash = NWDSecurityTools.GenerateSha(sLogin + sProject) + "-" +
                 NWDSecurityTools.GenerateSha(sLogin);
@@ -169,10 +170,10 @@ public class NWDAccountSign extends NWDAccountData {
     /// <param name="sPassword"></param>
     /// <param name="sProject"></param>
     /// <returns></returns>
-    public static NWDAccountSign CreateLoginPassword(String sLogin, String sPassword, long sProject) throws ArgumentNullException, UnsupportedEncodingException {
+    public static NWDAccountSign CreateLoginPassword(String sLogin, String sPassword, BigInteger sProject) throws ArgumentNullException, UnsupportedEncodingException {
         NWDAccountSign rReturn = new NWDAccountSign();
         rReturn.projectId = sProject;
-        rReturn.Name = NWDSecurityTools.CryptAes(sLogin,  Long.toString(sProject),  Long.toString(sProject));
+        rReturn.Name = NWDSecurityTools.CryptAes(sLogin, sProject.toString(), sProject.toString());
         rReturn.SignType = NWDAccountSignType.LoginPassword;
         rReturn.LoginHash = NWDSecurityTools.GenerateSha(sLogin + sProject) + "-" +
                 NWDSecurityTools.GenerateSha(sLogin);

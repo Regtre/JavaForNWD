@@ -11,6 +11,7 @@ import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.exchange.NWDExchangeRun
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.exchange.NWDUpPayloadAccountSignIn;
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request.NWDRequestPlayerToken;
 import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request.NWDRequestRuntime;
+import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request.NWDUpPayloadDataSyncByIncrement;
 import fr.nwwdjavaspringboot.model.NWDBusiness.facade.INWDProjectKey;
 import fr.nwwdjavaspringboot.util.AccountUtil;
 import fr.nwwdjavaspringboot.util.ArgumentNullException;
@@ -49,19 +50,15 @@ public class RuntimeCreatorForNWD {
                 account, exchangeOrigin, exchangeDevice);
     }
 
-    private NWDRequestRuntime createRequest(String token, NWDExchangeRuntimeKind nwdExchangeRuntimeKind){
+    private NWDRequestRuntime createRequest(String token, NWDExchangeRuntimeKind nwdExchangeRuntimeKind) {
         playerToken.setToken(token);
         playerToken.setExchangeOrigin(exchangeOrigin);
         return new NWDRequestRuntime(projectKey, playerToken, nwdExchangeRuntimeKind,
                 upPayload, exchangeOrigin, exchangeDevice);
     }
 
-    public NWDRequestRuntime syncDataRequest(String token) {
-        return createRequest(token,NWDExchangeRuntimeKind.SyncDataByIncrement);
-    }
-
-    public NWDRequestRuntime getAllDataRequest(String token) {
-        return createRequest(token,NWDExchangeRuntimeKind.GetAllData);
+    public NWDRequestRuntime syncDataRequest(NWDRequestPlayerToken pToken, NWDUpPayloadDataSyncByIncrement data) {
+        return NWDRequestRuntime.CreateRequestSyncDataByIncrement(projectKey, pToken, data, exchangeOrigin, exchangeDevice);
     }
 
     public NWDRequestRuntime getAllPlayerDataRequest(NWDRequestPlayerToken pToken) {

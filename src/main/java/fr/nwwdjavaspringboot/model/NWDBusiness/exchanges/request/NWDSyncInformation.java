@@ -1,8 +1,9 @@
 package fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class NWDSyncInformation implements INWDSerializable {
+public class NWDSyncInformation implements INWDSerializable, Serializable {
 
     public Boolean useMe = true;
 
@@ -25,6 +26,14 @@ public class NWDSyncInformation implements INWDSerializable {
     /// Sync Commit Id of request/Transaction
     /// </summary>
     public int syncCommitId;
+
+    public NWDSyncInformation()
+    {
+        syncDateTime = new Date(0);
+        syncCommitId = 0;
+        oldSyncDateTime = new Date(0);
+        oldSyncCommitId = 0;
+    }
 
 
 }
