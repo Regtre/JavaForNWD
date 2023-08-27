@@ -1,11 +1,8 @@
 package fr.nwwdjavaspringboot.controller;
 
-import fr.nwwdjavaspringboot.model.NWDBusiness.TestRequest;
+import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.TestRequest;
 import fr.nwwdjavaspringboot.service.TestRequestService;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Configuration;
 

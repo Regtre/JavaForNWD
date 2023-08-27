@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Result</h1>
+<p th:text="'name: ' + ${contact.name}" />
+<p th:text="'firstName: ' + ${contact.firstName}" />
+<p th:text="'enterprise: ' + ${contact.enterprise}" />
+<p th:text="'phone number: ' + ${contact.number}" />
+<p th:text="'id: ' + ${contact.id}" />
+<a href="/contact">Submit another contact</a>
+</body>
+</html>

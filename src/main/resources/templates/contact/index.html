@@ -1,0 +1,25 @@
+<div th:switch="${contacts.size()}">
+    <h2 th:case="0">No contacts yet !</h2>
+    <div th:case="*">
+        <h2>Users</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="contact : ${contacts}">
+                <td th:text="${contact.name}"></td>
+                <td th:text="${contact.firstName}"></td>
+                <td><a th:href="@{/edit/{id}(id=${contact.id})}">Edit</a></td>
+                <td><a th:href="@{/delete/{id}(id=${contact.id})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/contact">Add a new contact</a></p>
+</div>

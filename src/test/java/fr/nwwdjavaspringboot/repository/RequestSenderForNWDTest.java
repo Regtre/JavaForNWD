@@ -1,15 +1,14 @@
 package fr.nwwdjavaspringboot.repository;
 
-import fr.nwwdjavaspringboot.RuntimeCreatorForNWD;
+import fr.nwwdjavaspringboot.model.NWD.NWDDownPayloadDataSyncByIncrement;
+import fr.nwwdjavaspringboot.model.NWD.RuntimeCreatorForNWD;
 import fr.nwwdjavaspringboot.model.Contact;
-import fr.nwwdjavaspringboot.model.NWDBusiness.NWDPlayerDataFactory;
-import fr.nwwdjavaspringboot.model.NWDBusiness.NWDProjectInformation;
-import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.NWDPlayerDataStorage;
-import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.NWDStudioDataStorage;
-import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request.*;
-import fr.nwwdjavaspringboot.model.NWDPlayerData;
+import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.NWDPlayerDataFactory;
+import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.NWDProjectInformation;
+import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.NWDStudioDataStorage;
+import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.*;
+import fr.nwwdjavaspringboot.model.NWD.NWDPlayerData;
 import fr.nwwdjavaspringboot.util.ArgumentNullException;
-import fr.nwwdjavaspringboot.util.SendRequestUtil;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -17,11 +16,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -79,7 +75,6 @@ public class RequestSenderForNWDTest {
         rUpPayload.PlayerDataSyncInformation = new NWDSyncInformation();
         rUpPayload.StudioDataList = new ArrayList<NWDStudioDataStorage>();
         rUpPayload.StudioDataSyncInformation = new NWDSyncInformation();
-        rUpPayload.PlayerDataSyncInformation.oldSyncDateTime = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
         return rUpPayload;
     }
 }

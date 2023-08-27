@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Perfectly login</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Result</h1>
+<p th:text="'name: ' + ${account.name}" />
+<p th:text="'email: ' + ${account.mail}" />
+<p th:text="'password: ' + ${account.password}" />
+<a href="/contact/index">Go to contact</a>
+</body>
+</html>

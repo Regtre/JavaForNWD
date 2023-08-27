@@ -1,8 +1,12 @@
 package fr.nwwdjavaspringboot.repository;
 
-import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.NWDPlayerDataStorage;
+import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.NWDPlayerDataStorage;
+import fr.nwwdjavaspringboot.model.NWD.RuntimeCreatorForNWD;
+import fr.nwwdjavaspringboot.util.ArgumentNullException;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,14 +14,15 @@ import java.util.List;
 public class PlayerDataRepository {
 
     private String token;
-    private RequestSenderForNWD nwdRequestSender;
+    private final RequestSenderForNWD nwdRequestSender = new RequestSenderForNWD(new RuntimeCreatorForNWD());
 
-    public PlayerDataRepository() {
+
+    public PlayerDataRepository() throws ArgumentNullException, UnsupportedEncodingException {
         initTokenIfEmpty();
     }
 
     public void initTokenIfEmpty() {
-        if (token.isEmpty())
+        if (token == null)
             token = nwdRequestSender.getToken();
     }
 

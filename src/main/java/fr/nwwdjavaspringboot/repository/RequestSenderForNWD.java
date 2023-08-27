@@ -2,10 +2,10 @@ package fr.nwwdjavaspringboot.repository;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import fr.nwwdjavaspringboot.RuntimeCreatorForNWD;
-import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request.NWDRequestPlayerToken;
-import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request.NWDRequestRuntime;
-import fr.nwwdjavaspringboot.model.NWDBusiness.exchanges.request.NWDResponseRuntime;
+import fr.nwwdjavaspringboot.model.NWD.RuntimeCreatorForNWD;
+import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDRequestPlayerToken;
+import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDRequestRuntime;
+import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDResponseRuntime;
 import fr.nwwdjavaspringboot.util.SendRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;

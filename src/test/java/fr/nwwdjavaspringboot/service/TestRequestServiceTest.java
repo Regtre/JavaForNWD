@@ -1,11 +1,9 @@
 package fr.nwwdjavaspringboot.service;
 
-import fr.nwwdjavaspringboot.model.NWDBusiness.TestRequest;
+import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.TestRequest;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class TestRequestServiceTest {
 

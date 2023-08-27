@@ -1,6 +1,6 @@
 package fr.nwwdjavaspringboot.service;
 
-import fr.nwwdjavaspringboot.model.NWDBusiness.TestRequest;
+import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.TestRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
