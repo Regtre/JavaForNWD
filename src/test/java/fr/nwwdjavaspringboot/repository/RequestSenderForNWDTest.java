@@ -1,13 +1,13 @@
 package fr.nwwdjavaspringboot.repository;
 
-import fr.nwwdjavaspringboot.model.NWD.NWDDownPayloadDataSyncByIncrement;
-import fr.nwwdjavaspringboot.model.NWD.RuntimeCreatorForNWD;
 import fr.nwwdjavaspringboot.model.Contact;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.NWDPlayerDataFactory;
-import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.NWDProjectInformation;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.NWDStudioDataStorage;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.*;
+import fr.nwwdjavaspringboot.model.NWD.NWDDownPayloadDataSyncByIncrement;
 import fr.nwwdjavaspringboot.model.NWD.NWDPlayerData;
+import fr.nwwdjavaspringboot.model.NWD.NWDProjectInformation;
+import fr.nwwdjavaspringboot.model.NWD.RuntimeCreatorForNWD;
 import fr.nwwdjavaspringboot.util.ArgumentNullException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 @Component
 @Configurable
@@ -67,6 +68,9 @@ public class RequestSenderForNWDTest {
         Contact c1 = new Contact("Lila", "Nickler");
         Contact c2 = new Contact("Remy", "Poissonnier");
         Contact c3 = new Contact("Sylvain", "Carton");
+        c1.reference = BigInteger.ONE;
+        c2.reference = BigInteger.TWO;
+        c3.reference = BigInteger.TEN;
         List<NWDPlayerData> contactList = new ArrayList<>(
                 Arrays.asList(c1, c2, c3)
         );

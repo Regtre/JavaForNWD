@@ -9,6 +9,7 @@ import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDRequestP
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDRequestRuntime;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDResponseRuntime;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.facade.INWDProjectKey;
+import fr.nwwdjavaspringboot.model.NWD.NWDProjectInformation;
 import fr.nwwdjavaspringboot.util.ArgumentNullException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
