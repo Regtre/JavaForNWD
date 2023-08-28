@@ -1,5 +1,6 @@
 package fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges;
 
+import com.google.gson.annotations.SerializedName;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.NWDPlayerDataStorageBuilder;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.facade.INWDAccountDependence;
 
@@ -7,8 +8,11 @@ import java.math.BigInteger;
 
 public class NWDPlayerDataStorage extends NWDDataBasicStorageModel implements INWDAccountDependence {
 
+    @SerializedName("Account")
     public BigInteger account;
+    @SerializedName("Range")
     public int range;
+    @SerializedName("Process")
     public NWDPlayerDataProcessKind process = NWDPlayerDataProcessKind.None;
 
     public NWDPlayerDataStorage() {

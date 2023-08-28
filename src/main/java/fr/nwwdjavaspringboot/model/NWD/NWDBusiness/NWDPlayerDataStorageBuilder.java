@@ -27,7 +27,7 @@ public class NWDPlayerDataStorageBuilder {
     public boolean availableForApp = false;
     public int syncDatetime;
 
-    public int commit;
+    public BigInteger commit;
     public String className;
     public String json;
     public String indexOne;
@@ -69,7 +69,7 @@ public class NWDPlayerDataStorageBuilder {
 
     }
 
-    public NWDPlayerDataStorageBuilder setCommit(int commit) {
+    public NWDPlayerDataStorageBuilder setCommit(BigInteger commit) {
         this.commit = commit;
         return this;
 

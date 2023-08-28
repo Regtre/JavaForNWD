@@ -2,6 +2,7 @@ package fr.nwwdjavaspringboot.repository;
 
 import fr.nwwdjavaspringboot.model.Contact;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.NWDPlayerDataFactory;
+import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.NWDPlayerDataStorage;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.NWDStudioDataStorage;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.*;
 import fr.nwwdjavaspringboot.model.NWD.NWDDownPayloadDataSyncByIncrement;
@@ -49,6 +50,14 @@ public class RequestSenderForNWDTest {
         NWDResponseRuntime nwdResponseRuntime = requestSenderForNWD.send(runtimeCreatorForNWD.getAllPlayerDataRequest(token));
         assertNotSame(nwdResponseRuntime.status, NWDRequestStatus.Error);
         NWDDownPayloadDataSyncByIncrement data = nwdResponseRuntime.getPayload(new NWDProjectInformation(), NWDDownPayloadDataSyncByIncrement.class);
+
+        List<Contact> contacts = new ArrayList<Contact>();
+        for (NWDPlayerDataStorage playerDataStorage:
+                data.playerDataList) {
+            contacts.add((Contact) NWDPlayerDataFactory.FromPlayerDataStorage(playerDataStorage, Contact.class));
+
+        }
+
     }
 
     @Test
@@ -71,6 +80,9 @@ public class RequestSenderForNWDTest {
         c1.reference = BigInteger.ONE;
         c2.reference = BigInteger.TWO;
         c3.reference = BigInteger.TEN;
+        c1.account = sAccountReference;
+        c2.account = sAccountReference;
+        c3.account = sAccountReference;
         List<NWDPlayerData> contactList = new ArrayList<>(
                 Arrays.asList(c1, c2, c3)
         );

@@ -15,6 +15,6 @@ public abstract class NWDPlayerData extends NWDBasicModel implements INWDAccount
     public boolean availableForGame = false;
     public boolean availableForApp = false;
     public int syncDatetime;
-    public int commit;
+    public BigInteger commit;
     public NWDPlayerDataProcessKind process = NWDPlayerDataProcessKind.None;
 }
