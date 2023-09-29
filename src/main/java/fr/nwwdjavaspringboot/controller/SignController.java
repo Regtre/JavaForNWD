@@ -23,6 +23,7 @@ public class SignController {
 //    @Autowired
 //    ContactRepository contactRepository;
 
+
     @GetMapping("/")
     public String getIndex(){
         return "index";
@@ -38,4 +39,6 @@ public class SignController {
         model.addAttribute("account", account);
         return "sign/result";
     }
+
+
 }

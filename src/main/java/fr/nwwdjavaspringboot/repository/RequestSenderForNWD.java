@@ -7,6 +7,7 @@ import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDRequestP
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDRequestRuntime;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDResponseRuntime;
 import fr.nwwdjavaspringboot.util.SendRequestUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.http.*;
@@ -51,7 +52,7 @@ public class RequestSenderForNWD {
 
     }
 
-    public String getToken() {
+    public NWDRequestPlayerToken simulatedUser() {
         playerToken = send(customProperties.signUpRequest()).getPlayerToken();
         String token = playerToken.getToken();
         if (token.isEmpty()) {
@@ -60,7 +61,7 @@ public class RequestSenderForNWD {
         }
         if (token.isEmpty())
             throw new NullPointerException("Token empty");
-        return token;
+        return playerToken;
 
     }
 }

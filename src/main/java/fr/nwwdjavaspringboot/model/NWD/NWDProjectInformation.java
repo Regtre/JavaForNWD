@@ -14,7 +14,7 @@ public class NWDProjectInformation implements INWDProjectInformation, INWDProjec
 
     @Override
     public BigInteger GetProjectId() {
-        return new BigInteger("1466794789");
+        return new BigInteger("1426718339");
     }
 
     @Override
@@ -29,7 +29,7 @@ public class NWDProjectInformation implements INWDProjectInformation, INWDProjec
 
     @Override
     public String getProjectKey(BigInteger sProjectId, NWDEnvironmentKind sEnvironmentKind) {
-        return "TURJOEIN-URTYVQEX-FIVYCSBL-DCFJSVTH-HRIGJLUL-DKUMOBXO-DHROWMGM-PKXEMWZT-WIFZRZLV-GYYKDMZD";
+        return "JXGCTJKC-DUJGLIZX-GWINPLYB-MNILSBDW-CYFCHFJN-VMXCDBFL-HJQHLVII-NQCEQYKA-ORPRHKFU-ICABMNUL";
     }
 
 }

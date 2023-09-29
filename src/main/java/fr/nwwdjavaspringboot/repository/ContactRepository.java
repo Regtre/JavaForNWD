@@ -1,6 +1,5 @@
 package fr.nwwdjavaspringboot.repository;
 
-import fr.nwwdjavaspringboot.model.Account;
 import fr.nwwdjavaspringboot.model.Contact;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.NWDPlayerDataFactory;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.NWDPlayerDataStorage;
@@ -24,6 +23,7 @@ import java.util.List;
 @Repository
 public class ContactRepository extends NWDRepository {
 
+    public NWDRequestPlayerToken playerToken ;
     RequestSenderForNWD requestSenderForNWD = new RequestSenderForNWD(new RuntimeCreatorForNWD());
     RuntimeCreatorForNWD runtimeCreatorForNWD = new RuntimeCreatorForNWD();
 
@@ -32,6 +32,9 @@ public class ContactRepository extends NWDRepository {
     public ContactRepository() throws ArgumentNullException, UnsupportedEncodingException {
     }
 
+    public NWDRequestPlayerToken simuletUser(){
+        return requestSenderForNWD.simulatedUser();
+    }
     public List<Contact> findAll() {
         List<Contact> contacts = new ArrayList<Contact>();
         NWDDownPayloadDataSyncByIncrement data = findAllPlayerData();
@@ -45,10 +48,9 @@ public class ContactRepository extends NWDRepository {
     }
 
     public void remove(Contact contact){}
-    public void create(Contact contact){
+    public void create(Contact contact, NWDRequestPlayerToken token){
 
-        requestSenderForNWD.getToken();
-        NWDRequestPlayerToken token = requestSenderForNWD.playerToken;
+        contact.account = token.getPlayerReference();
 
         NWDUpPayloadDataSyncByIncrement rUpPayload = new NWDUpPayloadDataSyncByIncrement();
         List<NWDPlayerData> contactList = new ArrayList<>(

@@ -37,7 +37,7 @@ public class RequestSenderForNWDTest {
 
     @Test
     public void getTokenTest() {
-        String token = requestSenderForNWD.getToken();
+        String token = requestSenderForNWD.simulatedUser().getToken();
         System.out.println("TOKEN -> " + token);
         assertNotNull(token);
 
@@ -45,7 +45,7 @@ public class RequestSenderForNWDTest {
 
     @Test
     public void getAllPlayerDataSendTest() {
-        requestSenderForNWD.getToken();
+        requestSenderForNWD.simulatedUser();
         NWDRequestPlayerToken token = requestSenderForNWD.playerToken;
         NWDResponseRuntime nwdResponseRuntime = requestSenderForNWD.send(runtimeCreatorForNWD.getAllPlayerDataRequest(token));
         assertNotSame(nwdResponseRuntime.status, NWDRequestStatus.Error);
@@ -62,7 +62,7 @@ public class RequestSenderForNWDTest {
 
     @Test
     public void syncDataSendTest() {
-        requestSenderForNWD.getToken();
+        requestSenderForNWD.simulatedUser();
         NWDRequestPlayerToken token = requestSenderForNWD.playerToken;
 
         NWDUpPayloadDataSyncByIncrement data = createSyncData(token.getPlayerReference());

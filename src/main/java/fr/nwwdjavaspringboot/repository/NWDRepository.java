@@ -1,8 +1,6 @@
 package fr.nwwdjavaspringboot.repository;
 
-import fr.nwwdjavaspringboot.model.Contact;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDRequestPlayerToken;
-import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDRequestStatus;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDResponseRuntime;
 import fr.nwwdjavaspringboot.model.NWD.NWDDownPayloadDataSyncByIncrement;
 import fr.nwwdjavaspringboot.model.NWD.NWDProjectInformation;
@@ -10,8 +8,6 @@ import fr.nwwdjavaspringboot.model.NWD.RuntimeCreatorForNWD;
 import fr.nwwdjavaspringboot.util.ArgumentNullException;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class NWDRepository {
 
@@ -23,7 +19,7 @@ public class NWDRepository {
 
     protected NWDDownPayloadDataSyncByIncrement findAllPlayerData() {
 
-        requestSenderForNWD.getToken();
+        requestSenderForNWD.simulatedUser();
         NWDRequestPlayerToken token = requestSenderForNWD.playerToken;
         NWDResponseRuntime nwdResponseRuntime = requestSenderForNWD.send(runtimeCreatorForNWD.getAllPlayerDataRequest(token));
         return nwdResponseRuntime.getPayload(new NWDProjectInformation(), NWDDownPayloadDataSyncByIncrement.class);
