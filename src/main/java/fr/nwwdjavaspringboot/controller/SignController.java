@@ -33,4 +33,9 @@ public class SignController {
         return "sign/index";
     }
 
+    @PostMapping("/sign")
+    public String greetingSubmit(@ModelAttribute Account account, Model model) {
+        model.addAttribute("account", account);
+        return "sign/result";
+    }
 }

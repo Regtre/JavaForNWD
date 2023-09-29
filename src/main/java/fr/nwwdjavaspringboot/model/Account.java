@@ -7,9 +7,13 @@ import lombok.Setter;
 @Setter
 public class Account {
 
-    public String name = "LeKing";
-    public String mail = "r.poissonnier@gmail.com";
-    public String password = "REMY_le_KING";
+//    public String name = "LeKing";
+//    public String mail = "r.poissonnier@gmail.com";
+//    public String password = "REMY_le_KING";
+
+    public String name;
+    public String mail;
+    public String password;
 
     public Account(){}
 }
