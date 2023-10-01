@@ -1,10 +1,15 @@
 package fr.nwwdjavaspringboot.util;
 
+import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.NWDPlayerDataFactory;
+import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.NWDStudioDataStorage;
+import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDRequestPlayerToken;
+import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDSyncInformation;
+import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDUpPayloadDataSyncByIncrement;
+import fr.nwwdjavaspringboot.model.NWD.NWDPlayerData;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class SendRequestUtil {
 
@@ -18,5 +23,19 @@ public class SendRequestUtil {
         param.put("Content-Type", "application/json");
         headers.setAll(param);
         return headers;
+    }
+
+    public static NWDUpPayloadDataSyncByIncrement createUpPayloadForAContact(NWDPlayerData playerData, NWDRequestPlayerToken token) {
+        NWDUpPayloadDataSyncByIncrement rUpPayload = new NWDUpPayloadDataSyncByIncrement();
+        List<NWDPlayerData> contactList = new ArrayList<>(
+                Arrays.asList(playerData)
+        );
+
+        rUpPayload.PlayerDataList = NWDPlayerDataFactory.ToPlayerDataStorage(contactList, token.getPlayerReference());
+        rUpPayload.PlayerDataSyncInformation = new NWDSyncInformation();
+        rUpPayload.StudioDataList = new ArrayList<NWDStudioDataStorage>();
+        rUpPayload.StudioDataSyncInformation = new NWDSyncInformation();
+
+        return rUpPayload;
     }
 }

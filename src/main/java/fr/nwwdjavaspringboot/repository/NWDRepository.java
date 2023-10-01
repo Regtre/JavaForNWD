@@ -17,10 +17,7 @@ public class NWDRepository {
     public NWDRepository() throws ArgumentNullException, UnsupportedEncodingException {
     }
 
-    protected NWDDownPayloadDataSyncByIncrement findAllPlayerData() {
-
-        requestSenderForNWD.simulatedUser();
-        NWDRequestPlayerToken token = requestSenderForNWD.playerToken;
+    protected NWDDownPayloadDataSyncByIncrement findAllPlayerData(NWDRequestPlayerToken token) {
         NWDResponseRuntime nwdResponseRuntime = requestSenderForNWD.send(runtimeCreatorForNWD.getAllPlayerDataRequest(token));
         return nwdResponseRuntime.getPayload(new NWDProjectInformation(), NWDDownPayloadDataSyncByIncrement.class);
 

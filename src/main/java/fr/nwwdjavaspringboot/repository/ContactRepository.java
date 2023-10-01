@@ -13,6 +13,7 @@ import fr.nwwdjavaspringboot.model.NWD.NWDPlayerData;
 import fr.nwwdjavaspringboot.model.NWD.NWDProjectInformation;
 import fr.nwwdjavaspringboot.model.NWD.RuntimeCreatorForNWD;
 import fr.nwwdjavaspringboot.util.ArgumentNullException;
+import fr.nwwdjavaspringboot.util.SendRequestUtil;
 import org.springframework.stereotype.Repository;
 
 import java.io.UnsupportedEncodingException;
@@ -23,7 +24,7 @@ import java.util.List;
 @Repository
 public class ContactRepository extends NWDRepository {
 
-    public NWDRequestPlayerToken playerToken ;
+    public NWDRequestPlayerToken playerToken;
     RequestSenderForNWD requestSenderForNWD = new RequestSenderForNWD(new RuntimeCreatorForNWD());
     RuntimeCreatorForNWD runtimeCreatorForNWD = new RuntimeCreatorForNWD();
 
@@ -32,14 +33,29 @@ public class ContactRepository extends NWDRepository {
     public ContactRepository() throws ArgumentNullException, UnsupportedEncodingException {
     }
 
-    public NWDRequestPlayerToken simuletUser(){
+    public NWDRequestPlayerToken simulatedUser() {
         return requestSenderForNWD.simulatedUser();
     }
-    public List<Contact> findAll() {
+
+//    private NWDDownPayloadDataSyncByIncrement sendAndReceiveDataAndUpdateToken(NWDRequestPlayerToken token){
+//
+//        NWDResponseRuntime nwdResponseRuntime = requestSenderForNWD.send(runtimeCreatorForNWD.getAllPlayerDataRequest(token));
+//        token.setToken(nwdResponseRuntime.playerToken.getToken());
+//        token.setOldToken(nwdResponseRuntime.playerToken.getOldToken());
+//        return nwdResponseRuntime.getPayload(new NWDProjectInformation(), NWDDownPayloadDataSyncByIncrement.class);
+//    }
+
+    public List<Contact> findAll(NWDRequestPlayerToken token) {
         List<Contact> contacts = new ArrayList<Contact>();
-        NWDDownPayloadDataSyncByIncrement data = findAllPlayerData();
-        for (NWDPlayerDataStorage playerDataStorage:
-             data.playerDataList) {
+
+        NWDResponseRuntime nwdResponseRuntime = requestSenderForNWD.send(runtimeCreatorForNWD.getAllPlayerDataRequest(token));
+        token.setToken(nwdResponseRuntime.playerToken.getToken());
+        token.setOldToken(nwdResponseRuntime.playerToken.getOldToken());
+        NWDDownPayloadDataSyncByIncrement data = nwdResponseRuntime.getPayload(new NWDProjectInformation(), NWDDownPayloadDataSyncByIncrement.class);
+
+        if (data == null) return contacts;
+        for (NWDPlayerDataStorage playerDataStorage :
+                data.playerDataList) {
             contacts.add((Contact) NWDPlayerDataFactory.FromPlayerDataStorage(playerDataStorage, Contact.class));
 
         }
@@ -47,25 +63,20 @@ public class ContactRepository extends NWDRepository {
         return contacts;
     }
 
-    public void remove(Contact contact){}
-    public void create(Contact contact, NWDRequestPlayerToken token){
+    public void remove(Contact contact) {
+    }
 
-        contact.account = token.getPlayerReference();
+    public void create(Contact contact, NWDRequestPlayerToken token) {
 
-        NWDUpPayloadDataSyncByIncrement rUpPayload = new NWDUpPayloadDataSyncByIncrement();
-        List<NWDPlayerData> contactList = new ArrayList<>(
-                Arrays.asList(contact)
-        );
-
-        rUpPayload.PlayerDataList = NWDPlayerDataFactory.ToPlayerDataStorage(contactList, token.getPlayerReference());
-        rUpPayload.PlayerDataSyncInformation = new NWDSyncInformation();
-        rUpPayload.StudioDataList = new ArrayList<NWDStudioDataStorage>();
-        rUpPayload.StudioDataSyncInformation = new NWDSyncInformation();
-
+        NWDUpPayloadDataSyncByIncrement rUpPayload = SendRequestUtil.createUpPayloadForAContact(contact, token);
         NWDResponseRuntime nwdResponseRuntime = requestSenderForNWD.send(runtimeCreatorForNWD.syncDataRequest(token, rUpPayload));
+        token.setToken(nwdResponseRuntime.playerToken.getToken());
+        token.setOldToken(nwdResponseRuntime.playerToken.getOldToken());
         NWDDownPayloadDataSyncByIncrement payload = nwdResponseRuntime.getPayload(new NWDProjectInformation(), NWDDownPayloadDataSyncByIncrement.class);
 
     }
-    public void update(Contact contact){}
-    public void delete(Contact contact){}
+
+
+    public void update(Contact contact) {
+    }
 }

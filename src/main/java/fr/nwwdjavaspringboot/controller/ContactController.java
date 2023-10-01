@@ -2,10 +2,9 @@ package fr.nwwdjavaspringboot.controller;
 
 import fr.nwwdjavaspringboot.model.Contact;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDRequestPlayerToken;
-import fr.nwwdjavaspringboot.model.NWD.RuntimeCreatorForNWD;
 import fr.nwwdjavaspringboot.model.SessionPlayerToken;
 import fr.nwwdjavaspringboot.repository.ContactRepository;
-import fr.nwwdjavaspringboot.repository.RequestSenderForNWD;
+import fr.nwwdjavaspringboot.service.ContactService;
 import fr.nwwdjavaspringboot.util.ArgumentNullException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ import java.io.UnsupportedEncodingException;
 public class ContactController {
 
     @Autowired
-    ContactRepository contactRepository;
+    ContactService contactService;
     @Autowired
     SessionPlayerToken playerToken;
 
@@ -36,13 +35,14 @@ public class ContactController {
 
     @GetMapping("/simulatedUser")
     public String simulatedUser(Model model, HttpServletRequest request) throws ArgumentNullException, UnsupportedEncodingException {
-        request.getSession().setAttribute("playerToken",contactRepository.simuletUser());
+        request.getSession().setAttribute("playerToken",contactService.simulatedUser());
         return index(model, request);
     }
 
     @GetMapping("/all")
-    public String showUserList(Model model) {
-        model.addAttribute("contacts", contactRepository.findAll());
+    public String showUserList(Model model, HttpServletRequest request) {
+        model.addAttribute("contacts", contactService.findAll(
+                (NWDRequestPlayerToken) request.getSession().getAttribute("playerToken")));
         return "contact/index";
     }
     @GetMapping("/contact")
@@ -54,7 +54,7 @@ public class ContactController {
     @PostMapping("/contact")
     public String greetingSubmit(@ModelAttribute Contact contact, Model model, HttpServletRequest request) {
         model.addAttribute("contact", contact);
-        contactRepository.create(contact,
+        contactService.create(contact,
                 (NWDRequestPlayerToken) request.getSession().getAttribute("playerToken"));
         return "contact/result";
     }

@@ -36,8 +36,8 @@ public class RequestSenderForNWD {
 
     public NWDResponseRuntime send(NWDRequestRuntime request) {
 
-        if (playerToken != null)
-            request.PlayerToken.setPlayerReference(playerToken.getPlayerReference());
+//        if (playerToken != null)
+//            request.PlayerToken.setPlayerReference(playerToken.getPlayerReference());
 
         ResponseEntity<String> responseEntity = restTemplate.exchange(customProperties.getApiUrl(), HttpMethod.POST,
                 new HttpEntity<NWDRequestRuntime>(request, SendRequestUtil.getHeader()), String.class);
