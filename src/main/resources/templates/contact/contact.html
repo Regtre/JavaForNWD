@@ -1,17 +1,54 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org" lang="EN">
 <head>
-    <title>Getting Started: Handling Form Submission</title>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <title>Create contact</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<h1>Form</h1>
-<form action="#" th:action="@{/contact}" th:object="${contact}" method="post">
-    <p>Name: <input type="text" th:field="*{name}"/></p>
-    <p>FirstName: <input type="text" th:field="*{firstName}"/></p>
-    <p>Enterprise: <input type="text" th:field="*{enterprise}"/></p>
-    <p>PhoneNumber: <input type="text" th:field="*{number}"/></p>
-    <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
-</form>
+<div class=" card w-50  mx-auto mt-4">
+
+    <div class="card-header text-center">
+        <h1>Creation de contact</h1>
+    </div>
+    <form action="#" th:action="@{/contact}" th:object="${contact}" method="post">
+
+        <div class="card-body">
+
+
+            <div class="mb-3">
+                <label for="Name" class="form-label">Nom</label>
+                <input type="text" th:field="*{name}" class="form-control" id="Name">
+            </div>
+
+            <div class="mb-3 ">
+                <label for="FirstName" class="form-label">Prenom</label>
+                <input type="text" th:field="*{firstName}" class="form-control" id="FirstName">
+            </div>
+
+            <div class="mb-3 ">
+                <label for="Enterprise" class="form-label">Entreprise</label>
+                <input type="text" th:field="*{enterprise}" class="form-control" id="Enterprise">
+            </div>
+
+            <div class="mb-3 ">
+                <label for="PhoneNumber" class="form-label">Numero de téléphone</label>
+                <input type="text" th:field="*{number}" class="form-control" id="PhoneNumber">
+            </div>
+
+
+        </div>
+        <div class="card-footer text-center">
+
+            <p><input type="submit" class="btn btn-primary" value="Submit"/>
+                <input class="btn btn-secondary" type="reset" value="Reset"/></p>
+
+        </div>
+
+    </form>
+
+
+</div>
+
 </body>
 </html>

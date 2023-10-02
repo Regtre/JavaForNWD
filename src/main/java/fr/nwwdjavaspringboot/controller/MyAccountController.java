@@ -55,7 +55,7 @@ public class MyAccountController {
         model.addAttribute("contact", contact);
         contactService.create(contact,
                 (NWDRequestPlayerToken) request.getSession().getAttribute("playerToken"));
-        return "contact/result";
+        return showUserList(model, request);
     }
 
     //    @DeleteMapping("/delete/{id}")

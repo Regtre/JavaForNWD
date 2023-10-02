@@ -1,25 +1,41 @@
-<div th:switch="${contacts.size()}">
+<head>
+    <div th:replace="~{fragments/header :: header}"></div>
+</head>
+
+
+<div class="card w-50 mx-auto mt-4 text-center" th:switch="${contacts.size()}">
     <h2 th:case="0">No contacts yet !</h2>
     <div th:case="*">
-        <h2>Users</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="contact : ${contacts}">
-                <td th:text="${contact.name}"></td>
-                <td th:text="${contact.firstName}"></td>
-                <td><a th:href="@{/edit/{id}(id=${contact.reference})}">Edit</a></td>
-                <td><a th:href="@{/delete/{id}(id=${contact.reference})}">Delete</a></td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="card-header">
+            <h2>Users</h2>
+        </div>
+        <div class="card-body ">
+
+            <table class="table   ">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Entreprise</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="contact : ${contacts}">
+                    <td th:text="${contact.name}"></td>
+                    <td th:text="${contact.enterprise}"></td>
+                    <td th:text="${contact.firstName}"></td>
+                    <td><a class="btn btn-primary" th:href="@{/edit/{id}(id=${contact.reference})}">Edit</a></td>
+                    <td><a class="btn btn-secondary" th:href="@{/delete/{id}(id=${contact.reference})}">Delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-primary" href="/contact">Add a new contact</a>
+        </div>
+
     </div>
-    <p><a href="/contact">Add a new contact</a></p>
+
 </div>

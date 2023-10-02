@@ -7,18 +7,23 @@
 
 
 <body>
-<div th:replace="~{fragments/navigation :: navigation}">
+<!--<div th:replace="~{fragments/navigation :: navigation}">-->
+
+<div class="card  w-25 text-center mx-auto mt-4 ">
+
+    <div class="card-header">
+        <h1>WELCOME TO REMSWD</h1>
+    </div>
+    <div class="card-body text-center">
+
+
+        <a class="btn btn-primary" href="/simulatedUser">Usurper l'identité de Rems</a>
+        <a class="btn btn-primary disabled" href="/#">sign</a>
+
+    </div>
 
 </div>
 
-<h1 class="text-center">
-    WELCOME TO REMSWD
-</h1>
-<h1><a href="/simulatedUser">Usurper l'identité de Rems</a></h1>
-<p>Get your player data <a href="/contact">here</a></p>
-
-<div th:replace="~{fragments/footer:: footer}">
-</div>
 
 </body>
 </html>
