@@ -1,44 +1,52 @@
 package fr.nwwdjavaspringboot.service;
 
-import fr.nwwdjavaspringboot.model.Account;
 import fr.nwwdjavaspringboot.model.Contact;
-import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.NWDPlayerDataFactory;
-import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.NWDPlayerDataStorage;
-import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.NWDStudioDataStorage;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDRequestPlayerToken;
-import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDResponseRuntime;
-import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDSyncInformation;
-import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDUpPayloadDataSyncByIncrement;
-import fr.nwwdjavaspringboot.model.NWD.NWDDownPayloadDataSyncByIncrement;
-import fr.nwwdjavaspringboot.model.NWD.NWDPlayerData;
-import fr.nwwdjavaspringboot.model.NWD.NWDProjectInformation;
-import fr.nwwdjavaspringboot.repository.ContactRepository;
+import fr.nwwdjavaspringboot.repository.ContactBack;
+import fr.nwwdjavaspringboot.util.ArgumentNullException;
 import fr.nwwdjavaspringboot.util.BigIntegerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@Configurable
+@Component
 public class ContactService {
 
     @Autowired
-    private ContactRepository contactRepository;
+    private ContactBack contactRepository;
 
+    private static List<Contact> contacts = new ArrayList<Contact>();
+
+    public ContactService() {
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+    }
 
     public NWDRequestPlayerToken simulatedUser() {
         return contactRepository.simulatedUser();
     }
 
     public List<Contact> findAll(NWDRequestPlayerToken token) {
-        return contactRepository.findAll(token);
+        contacts = contactRepository.findAll(token);
+        return contacts;
     }
 
-    public void remove(Contact contact) {
-        contactRepository.remove(contact);
+    public void remove(BigInteger contactReference, NWDRequestPlayerToken token) throws ArgumentNullException, UnsupportedEncodingException {
+        Optional<Contact> contactOp = contacts.stream().filter(
+                        c -> c.reference.equals(contactReference)
+                )
+                .findFirst();
+        if (contactOp.isPresent()) new ContactBack().remove(contactOp.get(), token);
+        else throw new NullPointerException("No contact find");
     }
 
     public void create(Contact contact, NWDRequestPlayerToken token) {
@@ -52,7 +60,9 @@ public class ContactService {
 
     }
 
-    public void update(Contact contact) {
+    public void update(Contact contact, NWDRequestPlayerToken token) throws ArgumentNullException, UnsupportedEncodingException {
+        contact.account = token.getPlayerReference();
+        new ContactBack().update(contact, token);
     }
 
 
@@ -70,4 +80,11 @@ public class ContactService {
         return accountRef;
     }
 
+    public Contact find(BigInteger contactReference) {
+        Optional<Contact> contactOp = contacts.stream().filter(
+                        c -> c.reference.equals(contactReference)
+                )
+                .findFirst();
+        return contactOp.get();
+    }
 }

@@ -15,8 +15,8 @@
             <tr th:each="contact : ${contacts}">
                 <td th:text="${contact.name}"></td>
                 <td th:text="${contact.firstName}"></td>
-                <td><a th:href="@{/edit/{id}(id=${contact.id})}">Edit</a></td>
-                <td><a th:href="@{/delete/{id}(id=${contact.id})}">Delete</a></td>
+                <td><a th:href="@{/edit/{id}(id=${contact.reference})}">Edit</a></td>
+                <td><a th:href="@{/delete/{id}(id=${contact.reference})}">Delete</a></td>
             </tr>
             </tbody>
         </table>

@@ -1,28 +1,25 @@
-package fr.nwwdjavaspringboot.repository;
+package fr.nwwdjavaspringboot.service;
 
 import fr.nwwdjavaspringboot.model.Contact;
-import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.NWDPlayerDataFactory;
-import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.NWDDownPayload;
-import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.NWDPlayerDataStorage;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDRequestPlayerToken;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDResponseRuntime;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDUpPayloadDataSyncByIncrement;
 import fr.nwwdjavaspringboot.model.NWD.NWDDownPayloadDataSyncByIncrement;
 import fr.nwwdjavaspringboot.model.NWD.NWDProjectInformation;
 import fr.nwwdjavaspringboot.model.NWD.RuntimeCreatorForNWD;
+import fr.nwwdjavaspringboot.repository.RequestSenderForNWD;
 import fr.nwwdjavaspringboot.util.ArgumentNullException;
-import fr.nwwdjavaspringboot.util.SendRequestUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NWDRepository {
+public class NWDService {
 
     RequestSenderForNWD requestSenderForNWD = new RequestSenderForNWD(new RuntimeCreatorForNWD());
     RuntimeCreatorForNWD runtimeCreatorForNWD = new RuntimeCreatorForNWD();
 
-    public NWDRepository() throws ArgumentNullException, UnsupportedEncodingException {
+    public NWDService() throws ArgumentNullException, UnsupportedEncodingException {
     }
 
     private NWDDownPayloadDataSyncByIncrement updateTokenAndGetPayload(NWDResponseRuntime nwdResponseRuntime,
@@ -46,13 +43,11 @@ public class NWDRepository {
 
     }
 
-    public void remove(Contact contact) {
-    }
-
-    public NWDDownPayloadDataSyncByIncrement create(NWDUpPayloadDataSyncByIncrement rUpPayload, NWDRequestPlayerToken token) {
+    public NWDDownPayloadDataSyncByIncrement sync(NWDUpPayloadDataSyncByIncrement rUpPayload, NWDRequestPlayerToken token) {
         NWDResponseRuntime nwdResponseRuntime = requestSenderForNWD.send(runtimeCreatorForNWD.syncDataRequest(token, rUpPayload));
         return updateTokenAndGetPayload(nwdResponseRuntime, token);
     }
+
 
 
 }

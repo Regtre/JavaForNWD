@@ -32,7 +32,7 @@ public class NWDSyncInformation implements INWDSerializable, Serializable {
     {
         syncDateTime = new Date();
         syncCommitId = BigInteger.ONE;
-        oldSyncDateTime = new Date(0);
+        oldSyncDateTime = new Date(0); //TODO to change
         oldSyncCommitId = BigInteger.ZERO;
     }
 
