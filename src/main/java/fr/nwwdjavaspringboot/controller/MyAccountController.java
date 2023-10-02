@@ -19,7 +19,7 @@ import java.io.UnsupportedEncodingException;
 
 @SessionScope
 @Controller
-public class ContactController {
+public class MyAccountController {
 
     @Autowired
     ContactService contactService;

@@ -28,6 +28,8 @@ public class ContactRepository extends NWDRepository {
     RequestSenderForNWD requestSenderForNWD = new RequestSenderForNWD(new RuntimeCreatorForNWD());
     RuntimeCreatorForNWD runtimeCreatorForNWD = new RuntimeCreatorForNWD();
 
+    NWDRepository nwdRepository = new NWDRepository();
+
     List<Contact> contacts;
 
     public ContactRepository() throws ArgumentNullException, UnsupportedEncodingException {
@@ -37,22 +39,9 @@ public class ContactRepository extends NWDRepository {
         return requestSenderForNWD.simulatedUser();
     }
 
-//    private NWDDownPayloadDataSyncByIncrement sendAndReceiveDataAndUpdateToken(NWDRequestPlayerToken token){
-//
-//        NWDResponseRuntime nwdResponseRuntime = requestSenderForNWD.send(runtimeCreatorForNWD.getAllPlayerDataRequest(token));
-//        token.setToken(nwdResponseRuntime.playerToken.getToken());
-//        token.setOldToken(nwdResponseRuntime.playerToken.getOldToken());
-//        return nwdResponseRuntime.getPayload(new NWDProjectInformation(), NWDDownPayloadDataSyncByIncrement.class);
-//    }
-
     public List<Contact> findAll(NWDRequestPlayerToken token) {
         List<Contact> contacts = new ArrayList<Contact>();
-
-        NWDResponseRuntime nwdResponseRuntime = requestSenderForNWD.send(runtimeCreatorForNWD.getAllPlayerDataRequest(token));
-        token.setToken(nwdResponseRuntime.playerToken.getToken());
-        token.setOldToken(nwdResponseRuntime.playerToken.getOldToken());
-        NWDDownPayloadDataSyncByIncrement data = nwdResponseRuntime.getPayload(new NWDProjectInformation(), NWDDownPayloadDataSyncByIncrement.class);
-
+        NWDDownPayloadDataSyncByIncrement data = nwdRepository.getAllData(token);
         if (data == null) return contacts;
         for (NWDPlayerDataStorage playerDataStorage :
                 data.playerDataList) {
@@ -69,11 +58,7 @@ public class ContactRepository extends NWDRepository {
     public void create(Contact contact, NWDRequestPlayerToken token) {
 
         NWDUpPayloadDataSyncByIncrement rUpPayload = SendRequestUtil.createUpPayloadForAContact(contact, token);
-        NWDResponseRuntime nwdResponseRuntime = requestSenderForNWD.send(runtimeCreatorForNWD.syncDataRequest(token, rUpPayload));
-        token.setToken(nwdResponseRuntime.playerToken.getToken());
-        token.setOldToken(nwdResponseRuntime.playerToken.getOldToken());
-        NWDDownPayloadDataSyncByIncrement payload = nwdResponseRuntime.getPayload(new NWDProjectInformation(), NWDDownPayloadDataSyncByIncrement.class);
-
+        NWDDownPayloadDataSyncByIncrement payload = nwdRepository.create(rUpPayload,token);
     }
 
 
