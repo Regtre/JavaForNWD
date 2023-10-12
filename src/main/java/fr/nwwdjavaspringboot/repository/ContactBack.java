@@ -1,5 +1,6 @@
 package fr.nwwdjavaspringboot.repository;
 
+import fr.nwwdjavaspringboot.facade.IContactBack;
 import fr.nwwdjavaspringboot.model.Contact;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.NWDPlayerDataFactory;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.NWDPlayerDataStorage;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ContactBack extends NWDService {
+public class ContactBack extends NWDService implements IContactBack {
 
     public NWDRequestPlayerToken playerToken;
     static RequestSenderForNWD requestSenderForNWD;
