@@ -18,8 +18,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Configurable
-@Component
 public class ContactService {
 
     @Autowired
@@ -27,8 +25,9 @@ public class ContactService {
 
     private static List<Contact> contacts = new ArrayList<Contact>();
 
-    public ContactService() {
-        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+    @Autowired
+    public ContactService(ContactBack cb) {
+        contactRepository = cb;
     }
 
     public NWDRequestPlayerToken simulatedUser() {
@@ -42,11 +41,15 @@ public class ContactService {
 
     public void remove(BigInteger contactReference, NWDRequestPlayerToken token) throws ArgumentNullException, UnsupportedEncodingException {
         Optional<Contact> contactOp = contacts.stream().filter(
-                        c -> c.reference.equals(contactReference)
+                        c -> {
+                            if (c.reference != null)
+                                return c.reference.equals(contactReference);
+                            else
+                                return false;
+                        }
                 )
                 .findFirst();
         if (contactOp.isPresent()) new ContactBack().remove(contactOp.get(), token);
-        else throw new NullPointerException("No contact find");
     }
 
     public void create(Contact contact, NWDRequestPlayerToken token) {
@@ -82,9 +85,14 @@ public class ContactService {
 
     public Contact find(BigInteger contactReference) {
         Optional<Contact> contactOp = contacts.stream().filter(
-                        c -> c.reference.equals(contactReference)
+                        c -> {
+                            if (c.reference != null)
+                                return c.reference.equals(contactReference);
+                            else
+                                return false;
+                        }
                 )
-                .findFirst();
-        return contactOp.get();
+                .findAny();
+        return contactOp.orElse(null);
     }
 }

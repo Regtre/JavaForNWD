@@ -2,7 +2,6 @@ package fr.nwwdjavaspringboot.controller;
 
 import fr.nwwdjavaspringboot.model.Contact;
 import fr.nwwdjavaspringboot.model.NWD.NWDBusiness.exchanges.request.NWDRequestPlayerToken;
-import fr.nwwdjavaspringboot.model.SessionPlayerToken;
 import fr.nwwdjavaspringboot.service.ContactService;
 import fr.nwwdjavaspringboot.util.ArgumentNullException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,19 +9,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.SessionScope;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 
-@SessionScope
 @Controller
 public class MyAccountController {
 
+    private ContactService contactService;
+
     @Autowired
-    ContactService contactService;
+    public MyAccountController(ContactService cs){
+        contactService = cs ;
+    }
+
     @Autowired
-    SessionPlayerToken playerToken;
+    public void setContactService(ContactService cs){
+        contactService = cs;
+    }
 
     @GetMapping("/index")
     public String index(Model model, HttpServletRequest request) {
@@ -38,7 +42,7 @@ public class MyAccountController {
     }
 
     @GetMapping("/all")
-    public String showUserList(Model model, HttpServletRequest request) {
+    public String showContacts(Model model, HttpServletRequest request) {
         model.addAttribute("contacts", contactService.findAll(
                 (NWDRequestPlayerToken) request.getSession().getAttribute("playerToken")));
         return "contact/contactList";
@@ -55,30 +59,34 @@ public class MyAccountController {
         model.addAttribute("contact", contact);
         contactService.create(contact,
                 (NWDRequestPlayerToken) request.getSession().getAttribute("playerToken"));
-        return showUserList(model, request);
+        return showContacts(model, request);
     }
 
-    //    @DeleteMapping("/delete/{id}")
     @RequestMapping(value = "/delete/{id}", method = {RequestMethod.DELETE, RequestMethod.GET})
     private String deleteContact(@PathVariable("id") BigInteger contactReference, Model model, HttpServletRequest request) throws ArgumentNullException, UnsupportedEncodingException {
-        new ContactService().remove(contactReference,
+        contactService.remove(contactReference,
                 (NWDRequestPlayerToken) request.getSession().getAttribute("playerToken"));
-        return showUserList(model, request);
+        return showContacts(model, request);
     }
 
     @PostMapping(value = "/update/{id}")
     private String updateContact(@PathVariable("id") BigInteger contactReference,
                                  @ModelAttribute Contact contact, Model model, HttpServletRequest request) throws ArgumentNullException, UnsupportedEncodingException {
         contact.reference = contactReference;
-        new ContactService().update(contact,
+        contactService.update(contact,
                 (NWDRequestPlayerToken) request.getSession().getAttribute("playerToken"));
-        return showUserList(model, request);
+        return showContacts(model, request);
     }
 
     @GetMapping(value = "/edit/{id}")
-    private String updateContact(@PathVariable("id") BigInteger contactReference, Model model, HttpServletRequest request) throws ArgumentNullException, UnsupportedEncodingException {
+    private String updateContact(@PathVariable("id") String idRef, Model model, HttpServletRequest request) throws ArgumentNullException, UnsupportedEncodingException {
 
-        model.addAttribute("contact", new ContactService().find(contactReference));
+        BigInteger contactReference = new BigInteger(idRef);
+        Contact contactFind = contactService.find(contactReference);
+        if (contactFind == null)
+            return showContacts(model, request);
+
+        model.addAttribute("contact", contactFind);
         return "contact/edit";
     }
 
